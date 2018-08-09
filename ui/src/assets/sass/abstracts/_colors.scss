@@ -1,0 +1,10 @@
+// palette https://coolors.co/20bf55-0b4f6c-01baef-fbfbff-757575
+
+// override spectre.css
+$primary-color: #363f45 !default;
+$secondary-color: #5e7c88 !default;
+$dark-color: #24221f !default;
+$gray-color: lighten($dark-color, 40%) !default;
+$gray-color-dark: darken($gray-color, 25%) !default;
+$gray-color-light: lighten($gray-color, 20%) !default;
+$text-safran: #feb41c;

@@ -1,0 +1,33 @@
+html,
+body {
+  height: 100%;
+  line-height: 1.5;
+}
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background-color: #fbfbff;
+}
+
+main {
+  min-height: calc(100vh - 90px);
+}
+
+header.navbar {
+  height: 3rem;
+  background-color: #24221f;
+  padding: .5em 0 1em;
+}
+
+header.navbar a {
+    color: #fbfbff;
+}
+
+footer {
+  min-height: 10em;
+  background-color: #03161E;
+}
+
+.panel {
+  background-color: white;
+}

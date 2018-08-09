@@ -1,0 +1,96 @@
+html,
+body {
+  height: 100%;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+main {
+  background-color: #fbfbff;
+  min-height: calc(150vh);
+  padding-top: 20px;
+}
+
+header.navbar {
+  height: 3rem;
+  background-color: $primary-color;
+  padding: .5em 0 1em;
+}
+
+header.navbar a {
+  color: #fbfbff;
+}
+
+footer {
+  color: white;
+  background-color: #24221f;
+}
+
+footer a {
+    color: #ffb13bff;
+}
+
+footer a:hover {
+    color: #ffb13bff;
+}
+footer a:visited {
+    color: #ffb13bff;
+}
+
+.panel {
+    background-color: white;
+}
+
+.account-content {
+    background-color: white;
+}
+
+.modal-container {
+    background-color: #fbfbff;
+}
+
+.register-btn {
+    background-color: #20bf55;
+    border-color:#20bf55;
+    color: white;
+}
+
+.register-btn:hover  {
+    background-color: white;
+    border-color: white;
+    color: #0B4F6C;
+}
+
+.register-link:hover {
+    text-decoration: none;
+    color: #0B4F6C;
+}
+
+.menu-item>a:hover {
+    color: white !important;
+}
+
+.menu-item>a.active {
+    color: white !important;
+}
+
+.logo {
+    height: 1.8rem;
+    width: 30rem;
+    background: url("/static/img/logo-light.svg") no-repeat;
+    background-size: contain;
+}
+
+
+.logo-link {
+    font-size: 0;
+    display: block;
+    color: transparent;
+    height: 100%;
+}
+
+.logo-big {
+    height: 4rem;
+    width: 20rem;
+    background: url("/static/img/logo-dark.svg") no-repeat 50%/auto;
+    background-size: contain;
+}

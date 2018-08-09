@@ -1,0 +1,63 @@
+
+$gitlab-color: #e24329;
+$gitlab-color-dark: darken($gitlab-color, 5%) !important;
+
+.gitlab-btn {
+    background-color: $gitlab-color !important;
+    border-color: $gitlab-color !important;
+    color: white !important;
+    padding: .30rem .4rem !important;
+
+    &:hover {
+        background-color: $gitlab-color-dark;
+        border-color: $gitlab-color-dark;
+    }
+}
+
+
+$github-color: #181717;
+$github-color-dark: lighten($github-color, 5%) !important;
+
+.github-btn {
+    background-color: $github-color !important;
+    border-color: $github-color !important;
+    color: white !important;
+    padding: .30rem .4rem !important;
+
+    &:hover {
+        background-color: $github-color-dark;
+        border-color: $github-color-dark;
+    }
+}
+
+
+$google-color: #4285F4;
+$google-color-dark: lighten($google-color, 5%) !important;
+
+.google-btn {
+    background-color: $google-color !important;
+    border-color: $google-color !important;
+    color: white !important;
+    padding: .30rem .4rem !important;
+
+    &:hover {
+        background-color: $google-color-dark;
+        border-color: $google-color-dark;
+    }
+}
+
+
+$bitbucket-color: #0052CC;
+$bitbucket-color-dark: lighten($bitbucket-color, 5%) !important;
+
+.bitbucket-btn {
+    background-color: $bitbucket-color !important;
+    border-color: $bitbucket-color !important;
+    color: white !important;
+    padding: .30rem .4rem !important;
+
+    &:hover {
+        background-color: $bitbucket-color-dark;
+        border-color: $bitbucket-color-dark;
+    }
+}

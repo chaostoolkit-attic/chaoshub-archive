@@ -1,0 +1,114 @@
+html,
+body {
+  height: 100%;
+  line-height: 1.5;
+}
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background-color: #fbfbff;
+}
+
+main {
+  min-height: calc(150vh - 20px);
+}
+
+header {
+    min-height: 50px !important;
+    padding-top: 5px;
+}
+
+.logo-big {
+    height: 4rem;
+    width: 20rem;
+    background: url("/static/img/logo-light.svg") no-repeat 50%/auto;
+    background-size: contain;
+}
+
+
+footer {
+  background-color: #24221f;
+  color: white;
+}
+
+footer a {
+    color: #ffb13bff;
+}
+
+footer a:hover {
+    color: #ffb13bff;
+}
+footer a:visited {
+    color: #ffb13bff;
+}
+
+.panel {
+  background-color: white;
+}
+
+.account-content {
+  background-color: white;
+}
+
+.modal-container {
+  background-color: #fbfbff;
+}
+
+.hero {
+  color: white;
+  background-color: #373839;
+  min-height: 30rem;
+}
+
+.hero-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-title {
+  font-size: 56px;
+}
+
+.hero-subtitle {
+  font-size: 28px;
+}
+
+.register {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.register-btn {
+    font-size: 24px;
+    background-color: #ffb13bff;
+    border-color:#ffb13bff;
+    color: white;
+    font-weight: bold;
+    min-height: 4rem;
+}
+
+.register-btn:hover  {
+    background-color: #fbfbff;
+    border-color: #fbfbff;
+    color: #373839;
+}
+
+.register-link:hover {
+    text-decoration: none;
+}
+
+.signin {
+    background-color: #373839;
+    border-color:#373839;
+    color: white;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.signin:hover {
+    background-color: #ffb13bff;
+    border-color:#ffb13bff;
+    color: 24221f;
+}

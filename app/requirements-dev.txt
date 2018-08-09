@@ -1,0 +1,8 @@
+wheel
+pycodestyle
+pydocstyle
+requests-mock
+coverage
+pytest
+pytest-cov
+pytest-sugar

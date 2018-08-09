@@ -1,0 +1,9 @@
+include README.md
+include requirements.txt
+include requirements-dev.txt
+include LICENSE.txt
+include CHANGELOG.md
+include pytest.ini
+include .env
+recursive-include ../ui/dist *
+recursive-include ../ui/dist/static *
