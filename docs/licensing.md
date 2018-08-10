@@ -20,6 +20,10 @@ obviously want anyone to freely enjoy the project, but to protect
 the project's community effort, it feels like the AGPLv3+ is the most
 appropriate license.
 
+There is also the aspect of some of our dependencies which are copyleft
+licenses that mean we had to choose at least something as free (or restrictive
+depending how you see it).
+
 ## Contribution
 
 The Chaos Hub project uses a simple [Developer Certificate of Origin][dco] for
