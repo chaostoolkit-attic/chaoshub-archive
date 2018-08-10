@@ -89,16 +89,30 @@ def serve_static(app: Flask):
     """
     Create an app that is responsible to serve static resources.
     """
-    ui_dir = os.path.normpath(os.path.abspath(
-        os.path.join(os.path.dirname(__file__), '..', '..', 'ui', 'dist')))
-    staticdir = os.path.join(ui_dir, "static")
+    cur_dir = os.path.abspath(os.path.dirname(__file__))
+    ui_dir = app.config.get("UI_ASSETS_DIR", "")
 
-    app.logger.info("Serving static files from {}".format(staticdir))
+    # did we gete a specific location?
+    if not ui_dir and not os.path.isdir(ui_dir):
+        # maybe its an installed with the chaoshubdashboard package?
+        ui_dir = os.path.join(cur_dir, 'ui')
+
+    # assume development mode
+    if not ui_dir or not os.path.isdir(ui_dir):
+        ui_dir = os.path.join(cur_dir, '..', '..', 'ui', 'dist')
+
+    if not os.path.isdir(ui_dir):
+        raise RuntimeError(
+            "Cannot find your static resources (html, img, css...). "
+            "Please set the UI_ASSETS_DIR environment variable to point "
+            "where they are located.")
+
+    app.logger.info("Serving static files from {}".format(ui_dir))
     app.template_folder = ui_dir
     cherrypy.tree.mount(None, "/static", {
         "/": {
             "tools.staticdir.on": True,
-            "tools.staticdir.dir": staticdir
+            "tools.staticdir.dir": os.path.join(ui_dir, 'static')
         }
     })
 

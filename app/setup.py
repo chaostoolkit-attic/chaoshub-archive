@@ -1,10 +1,12 @@
 #!/usr/bin/env python
-"""Chaos Hub chaoshubdashboard builder and installer"""
+"""Chaos Hub Dashboard builder and installer"""
+from distutils.errors import DistutilsFileError
 import io
 import os
 import sys
 
 import setuptools
+import setuptools.command.build_py
 
 
 def get_version_from_package() -> str:
@@ -21,6 +23,23 @@ def get_version_from_package() -> str:
                 version = version.replace("'", "").strip()
                 return version
     raise IOError("failed to locate chaoshubdashboard sources")
+
+
+# since our ui assets live outside this package, we can't rely on any of the
+# setuptools configuration settings to copy them. Let's do it manually.
+# I'd rather not but this is what it is...
+UI_ASSETS_DIR = os.path.normpath(
+    os.path.join(os.path.dirname(__file__), "..", "ui", "dist"))
+
+class Builder(setuptools.command.build_py.build_py):
+    def run(self):
+        if not self.dry_run:
+            ui_dir = os.path.join(self.build_lib, 'chaoshubdashboard/ui')
+            if not os.path.isdir(UI_ASSETS_DIR):
+                raise DistutilsFileError(
+                    "Make sure you build the UI assets before creating this package")
+            self.copy_tree(UI_ASSETS_DIR, ui_dir)
+        setuptools.command.build_py.build_py.run(self)
 
 
 name = 'chaoshub-dashboard'
@@ -43,7 +62,7 @@ classifiers = [
 ]
 author = 'ChaosIQ, Ltd'
 author_email = 'contact@chaosiq.io'
-url = 'https://chaoshub.org'
+url = 'https://github.com/chaostoolkit/chaoshub'
 packages = [
     'chaoshubdashboard',
     'chaoshubdashboard.api',
@@ -60,6 +79,9 @@ packages = [
 ]
 
 setup_params = dict(
+    cmdclass={
+        'build_py': Builder,
+    },
     name=name,
     version=get_version_from_package(),
     description=desc,
@@ -80,7 +102,13 @@ setup_params = dict(
         ]
     },
     include_package_data=True,
-    python_requires='>=3.7.*'
+    package_data={
+        '': [
+            os.path.abspath(
+                os.path.join(os.path.dirname(__file__), '../ui/dist/*.html'))
+            ]
+    },
+    python_requires='>=3.5.*'
 )
 
 
