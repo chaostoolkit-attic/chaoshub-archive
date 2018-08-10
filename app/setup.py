@@ -102,12 +102,6 @@ setup_params = dict(
         ]
     },
     include_package_data=True,
-    package_data={
-        '': [
-            os.path.abspath(
-                os.path.join(os.path.dirname(__file__), '../ui/dist/*.html'))
-            ]
-    },
     python_requires='>=3.5.*'
 )
 
