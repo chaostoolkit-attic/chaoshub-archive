@@ -26,7 +26,6 @@ blinker==1.4
 passlib==1.7.1
 setuptools==40.0.0
 python-crontab==2.3.4
-# those will be updated to official pinned releases once they have been published
--e git+https://github.com/chaostoolkit/chaostoolkit-lib.git#egg=chaostoolkit-lib
--e git+https://github.com/chaostoolkit/chaostoolkit.git#egg=chaostoolkit
--e git+https://github.com/chaostoolkit-incubator/chaostoolkit-chaoshub.git#egg=chaostoolkit-chaoshub
+chaostoolkit-lib==0.20.0
+chaostoolkit==0.15.0
+chaostoolkit-chaoshub==0.1.1
