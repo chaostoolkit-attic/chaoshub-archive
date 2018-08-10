@@ -23,6 +23,8 @@ exploring its use case and send the project your feedback on its missing bits.
   to render properly.
 * Improve the past scheduling view [TODO]
 * Write end-user documentation [TODO]
+* Ensure user profile can be edited [TODO]
+* Create a Privacy editing page [TODO]
 
 ## Code Status
 
