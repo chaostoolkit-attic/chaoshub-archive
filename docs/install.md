@@ -14,7 +14,7 @@ application via [Docker][docker].
 
 Pull the image
 ```
-$ docker pull chaostoolkit/chaoshub:0.1.0
+$ docker pull chaostoolkit/chaoshub:0.1.1
 ```
 
 ## Install from a release
