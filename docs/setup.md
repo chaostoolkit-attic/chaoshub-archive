@@ -1,12 +1,13 @@
 # Setup your Environment
 
-This project is meant to be executed easily locally by default.
+The Chaos Hub open source project was designed to be executed locally, with
+ minimal requirements, by default.
 
-**WARNING**: Do not run a default, non-configured, instance on a public address.
-This would be great honeypot!
+> **WARNING**: It is _not_ recommended run a default, non-configured, instance
+ on a public address.
 
-You can run the Chaos Hub locally without too much difficulties provided
-you install the dependencies.
+To run the Chaos Hub locally you need to install the following dependencies
+ first.
 
 ## Application Python Requirements
 
@@ -45,9 +46,8 @@ On Windows:
 
 ## Dependencies
 
-Dependencies can be installed for your system via its package management but,
-more likely, you will want to install them yourself in a local virtual
-environment.
+Chaos Hub dependencies can be installed for your system via its package 
+management system but, more likely, you may want to install them yourself in a local python virtual environment using:
 
 ```
 $ python3 -m venv .venv
@@ -60,7 +60,7 @@ $ source  .venv/bin/activate
 (.venv) $
 ```
 
-Once activated, install the dependencies as follows:
+Once activated you can install the Chaos Hub dependencies using:
 
 ```
 (.venv) $ pip install -r app/requirements.txt
@@ -68,8 +68,8 @@ Once activated, install the dependencies as follows:
 
 ## UI TypeScript dependencies
 
-In addition, you must install [npm][npm] on your machine and then deploy
-the dependencies to build the UI.
+To create and work with the UI elements for the Chaos Hub you need to install
+ [npm][npm] on your machine and then install the required dependencies:
 
 [npm]: https://www.npmjs.com/
 
@@ -78,3 +78,5 @@ $ cd ui
 $ npm -g install poi
 $ npm install
 ```
+
+> **NOTE**: You may need to use `sudo` to install global npm dependencies.
