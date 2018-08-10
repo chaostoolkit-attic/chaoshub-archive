@@ -2,7 +2,7 @@
 
 This project is meant to be executed easily locally by default.
 
-WARNING: Do not run a default, non-configured, instance on a public address.
+**WARNING**: Do not run a default, non-configured, instance on a public address.
 This would be great honeypot!
 
 You can run the Chaos Hub locally without too much difficulties provided
@@ -53,7 +53,7 @@ environment.
 $ python3 -m venv .venv
 ```
 
-Make sure to always activate your virtual environment before using it:
+Make sure to **always** activate your virtual environment before using it:
 
 ```
 $ source  .venv/bin/activate
@@ -65,3 +65,4 @@ Once activated, install the dependencies as follows:
 ```
 (.venv) $ pip install -r app/requirements.txt
 ```
+
