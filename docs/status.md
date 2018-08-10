@@ -7,17 +7,17 @@ particular order.
 ## General Status
 
 Currently, the project is in early stages. It does run and can get you some
-way but is not be production ready yet. It is meant to be used as-is for
-exploring its use case and send the project your feedback on its missing bits.
+way but is not be production-ready yet. It is meant to be used as-is for
+exploring its use case and please send the project your feedback on its missing bits.
 
 ## Features Matrix
 
-* Allow experiment edition from the UI [TODO]
+* Allow experiment editing from the UI [TODO]
   As of now, you still need to edit your experiment manually and the Hub only
   renders it. We will obviously make it so you can create and edit them from
   the UI.
 * Complete the local launcher of Chaos Toolkit instances [WIP]
-  Currently, the local launcher buil into the Chaos Hub is working but is
+  Currently, the local launcher built into the Chaos Hub is working but is
   rough around the edges. It needs to be more battle tested.
 * Implement the CRON launcher [TODO]
   The CRON launcher is not yet implemented properly and cannot be used at this
