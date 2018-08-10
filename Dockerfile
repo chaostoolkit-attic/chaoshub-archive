@@ -15,6 +15,7 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
         org.label-schema.version=$VERSION \
         org.label-schema.schema-version="1.0"
 
+
 VOLUME ["/var/chaoshub"]
 
 ADD app/requirements.txt requirements.txt
@@ -26,9 +27,12 @@ RUN apk update && \
     pip install --no-cache-dir -r requirements.txt && \
     apk del build-deps && \
     rm -rf /tmp/* /root/.cache && \
-    mkdir /etc/chaoshub
+    mkdir /etc/chaoshub && mkdir ui
 
+ADD LICENSE.txt /etc/chaoshub/LICENSE.txt
 ADD app/. .
+ADD ui/dist ui/dist
+ADD app/.env.sample /etc/chaoshub/.env
 RUN python3 setup.py install && \
     rm -rf build dist .cache *.egg-info
 

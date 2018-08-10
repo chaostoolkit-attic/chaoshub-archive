@@ -1,5 +1,15 @@
 # Launch the Chaos Hub
 
+## Run with Docker
+
+If you just want to try out the Chaos Hub, you may simply run it as a container:
+
+```
+$ docker run --rm -p 8080:8080 -it chaostoolkit/chaoshub:0.1.0
+```
+
+Note that all data will be lost when the container exits.
+
 ## Run Locally
 
 Ensure you have [setup][setup] your environment, and configured the settings,
@@ -23,7 +33,3 @@ You should read the [configuration][config] section to learn how to change that
 behavior.
 
 [config]: https://github.com/chaostoolkit/chaoshub/blob/master/docs/configure.md
-
-## Run with Docker
-
-TBD
