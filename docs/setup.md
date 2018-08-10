@@ -75,6 +75,6 @@ the dependencies to build the UI.
 
 ```
 $ cd ui
-$ npm -g poi
-$ npm i
+$ npm -g install poi
+$ npm install
 ```

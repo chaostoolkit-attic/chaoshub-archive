@@ -7,7 +7,7 @@ This repository contains the frontend project for the ChaosHub application.
 This requires the following packages to be installed:
 
 ```console
-$ sudo npm install poi
+$ sudo npm install -g poi
 $ npm install
 ```
 
