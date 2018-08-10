@@ -13,11 +13,11 @@ permissive license, the Chaos Hub uses a copyleft license.
 [agpl]: https://www.gnu.org/licenses/agpl-3.0.en.html
 [chaostoolkit]: https://chaostoolkit.org
 
-For libraries, permissive license does make more sense to us because their
-goal is to be embedded as freely much as possible. The Chaos Hub is an
-application, it does not aim at being embedded as an online service. We
-obviously want anyone to freely enjoy the project bit, to protect
-the project's community effort, it felt like the AGPLv3+ was the most
+For libraries, a permissive license does make more sense to us because their
+goal is to be embedded as freely as much as possible. The Chaos Hub is an
+application, it does not aim at being embedded into a program. We
+obviously want anyone to freely enjoy the project, but to protect
+the project's community effort, it feels like the AGPLv3+ is the most
 appropriate license.
 
 ## Contribution
@@ -30,7 +30,7 @@ contributions will be released under the project's license as well.
 But, as contributors, you still have the copyright of the changes themselves.
 Should the project decide to switch to a different license (non-compatible),
 you could deny using your changes. This is also why any contributions must
-be clean in the project's history, so we can easily understand what's the
+be clean in the project's history, so we can easily understand what the
 impact is.
 
 [dco]: https://github.com/probot/dco#how-it-works
