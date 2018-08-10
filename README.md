@@ -27,10 +27,13 @@ guides to get your environment ready.
 * [Install][install]: Install the Chaos Hub in your environment
 * [Configure][configure]: Learn how you may configure the Chaos Hub to run it
   according to your needs
+* [Status][status]: Consider reviewing the current status of the project to
+  fully appreciate how far you may go with it
 
 [install]: https://github.com/chaostoolkit/chaoshub/blob/master/docs/install.md
 [setup]: https://github.com/chaostoolkit/chaoshub/blob/master/docs/setup.md
 [configure]: https://github.com/chaostoolkit/chaoshub/blob/master/docs/configure.md
+[status]: https://github.com/chaostoolkit/chaoshub/blob/master/docs/status.md
 
 ## Run your own Chaos Hub
 
