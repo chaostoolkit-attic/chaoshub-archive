@@ -5,7 +5,7 @@
 Ensure you have [setup][setup] your environment before you can run the
 Chaos Hub.
 
-[setup]: https://github.com/chaostoolkit/chaoshub/raw/master/docs/setup.md
+[setup]: https://github.com/chaostoolkit/chaoshub/blob/master/docs/setup.md
 
 Then launch the Chaos Hub as follows:
 
@@ -21,7 +21,7 @@ you restart it.
 You should read the [configuration][config] section to learn how to change that
 behavior.
 
-[config]: https://github.com/chaostoolkit/chaoshub/raw/master/docs/configure.md
+[config]: https://github.com/chaostoolkit/chaoshub/blob/master/docs/configure.md
 
 ## Run with Docker
 

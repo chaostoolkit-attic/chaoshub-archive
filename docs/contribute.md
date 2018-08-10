@@ -21,4 +21,4 @@ take on the [license][] this project relies on to appreciate its rationale and
 impact on your contributions.
 
 [dco]: https://github.com/probot/dco#how-it-works
-[license]: https://github.com/chaostoolkit/chaoshub/raw/master/docs/licensing.md
+[license]: https://github.com/chaostoolkit/chaoshub/blob/master/docs/licensing.md

@@ -22,8 +22,8 @@ guides to get your environment ready.
 * [Configure][configure]: Learn how you may configure the Chaos Hub to run it
   according to your needs
 
-[setup]: https://github.com/chaostoolkit/chaoshub/docs/setup.md
-[configure]: https://github.com/chaostoolkit/chaoshub/docs/configure.md
+[setup]: https://github.com/chaostoolkit/chaoshub/blob/master/docs/setup.md
+[configure]: https://github.com/chaostoolkit/chaoshub/blob/master/docs/configure.md
 
 ## Run your own Chaos Hub
 
@@ -32,8 +32,8 @@ All the fun now starts!
 * [Launch][run]: Run the Chaos Hub
 * [Use][use]: Learn how to use the Chaos Hub
 
-[run]: https://github.com/chaostoolkit/chaoshub/docs/running.md
-[use]: https://github.com/chaostoolkit/chaoshub/docs/use.md
+[run]: https://github.com/chaostoolkit/chaoshub/blob/master/docs/running.md
+[use]: https://github.com/chaostoolkit/chaoshub/blob/master/docs/use.md
 
 ## Contribute to the Chaos Hub
 
@@ -44,5 +44,5 @@ contribute to it.
 * [License][license]: Review what it means for your contributions that the
   Chaos Hub is under the AGPLv3+ license
 
-[contribute]: https://github.com/chaostoolkit/chaoshub/docs/contribute.md
-[license]: https://github.com/chaostoolkit/chaoshub/docs/licensing.md
+[contribute]: https://github.com/chaostoolkit/chaoshub/blob/master/docs/contribute.md
+[license]: https://github.com/chaostoolkit/chaoshub/blob/master/docs/licensing.md
