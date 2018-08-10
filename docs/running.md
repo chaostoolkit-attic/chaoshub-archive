@@ -5,7 +5,7 @@
 If you just want to try out the Chaos Hub, you may simply run it as a container:
 
 ```
-$ docker run --rm -p 8080:8080 -it chaostoolkit/chaoshub:0.1.1
+$ docker run --rm -p 8080:8080 --name chaoshub -it chaostoolkit/chaoshub:0.1.1
 ```
 
 Note that all data will be lost when the container exits.
