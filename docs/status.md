@@ -22,6 +22,9 @@ exploring its use case and send the project your feedback on its missing bits.
 * Implement the CRON launcher [TODO]
   The CRON launcher is not yet implemented properly and cannot be used at this
   stage.
+* Respect the Schedule [TODO]
+  Right now, when you Schedule, the execution starts immediatly. Obviously,
+  we want to abide by the date and time set by the user
 * Finish the execution view [WIP]
   The view of your past executions is not completed yet and will likely break
   to render properly.
