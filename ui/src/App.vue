@@ -66,7 +66,8 @@
       <div class="columns">
         <div class="column col-8 col-mx-auto">
             <div class="my-2"></div>
-            <div class="d-block"><a href="https://chaoshub.org">ChaosHub</a> is an Open Source product under the AGPLv3+ license</div>
+            <div class="d-block"><a href="https://chaoshub.org">ChaosHub</a> is an Open Source product under the
+                <a href="https://github.com/chaostoolkit/chaoshub/blob/master/LICENSE.txt">AGPLv3+</a> license</div>
             <div class="d-block">&copy; 2018 - <a href="https://www.chaosiq.io">ChaosIQ</a></div>
         </div>
       </div>
