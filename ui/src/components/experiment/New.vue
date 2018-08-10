@@ -79,8 +79,9 @@
       })
     },
       methods: {
-        selectWorkspace: function(e) {
-            for(let w of this.context.workspaces) {
+        selectWorkspace: function(e: any) {
+            const context = this.context as any
+            for(let w of context.workspaces) {
                 if (w.id == this.workspace_id) {
                     this.org = w.org.name,
                     this.workspace = w.name
@@ -136,11 +137,12 @@
                 }
             }
             ).then(function (response) {
-                const experiment_id = response.data.id as String
-                const workspace_name = response.data.workspace.name as String
-                const org_name = response.data.workspace.org.name as String
+                const experiment_id = response.data.id as string
+                const workspace_name = response.data.workspace.name as string
+                const org_name = response.data.workspace.org.name as string
                 self.$router.push({
-                    name: 'experiment_default', params: {
+                    name: 'experiment_default',
+                    params: {
                         experiment: experiment_id,
                         workspace: workspace_name,
                         org: org_name
@@ -164,7 +166,8 @@
                 self.new_experiment.file = reader.result
             }.bind(this), false)
 
-            const file = this.$refs.expfile.files[0]
+            const experiment_upload = this.$refs.expfile as any
+            const file = experiment_upload.files[0]
             if( file ){
                 if (/\.(json)$/i.test(file.name)) {
                     reader.readAsText(file)
