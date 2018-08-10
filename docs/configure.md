@@ -3,10 +3,10 @@
 The Chaos Hub has only a few settings you can, and should, configure and they
 all live inside the dotenv (`.env`) file you will be provided it at runtime.
 
-A default set is provided [here][defaultdotenv].
+A default set is provided [here][defaultdotenv]. You should copy it somewhere
+and rename it to `.env`.
 
-[defaultdotenv]: https://github.com/chaostoolkit/chaoshub/raw/master/app/.env
-
+[defaultdotenv]: https://github.com/chaostoolkit/chaoshub/raw/master/app/.env.sample
 
 Note that the configuration is never reloaded on the fly. You must restart
 the process for changes to take effect.

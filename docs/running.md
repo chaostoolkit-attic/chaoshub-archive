@@ -2,16 +2,17 @@
 
 ## Run Locally
 
-Ensure you have [setup][setup] your environment before you can run the
-Chaos Hub.
+Ensure you have [setup][setup] your environment, and configured the settings,
+before you can run the Chaos Hub.
 
 [setup]: https://github.com/chaostoolkit/chaoshub/blob/master/docs/setup.md
+[configure]: https://github.com/chaostoolkit/chaoshub/blob/master/docs/configure.md
 
-Then launch the Chaos Hub as follows:
+Then launch the Chaos Hub as follows (using the default settings):
 
 ```
 $ source  .venv/bin/activate
-(.venv) $ chaoshub-dashboard run --env-path app/.env --create-tables
+(.venv) $ chaoshub-dashboard run --env-path app/.env.sample --create-tables
 ```
 
 By default, the Chaos Hub runs using an in-memory SQLite instance so you don't
