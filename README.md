@@ -8,9 +8,14 @@ Welcome to the [Chaos Hub][hub], the Open Source web dashboard for collaborative
 Chaos Engineering. The project is sponsored by [ChaosIQ][chaosiq] and
 licensed under the [AGPLv3+][agpl].
 
+Chaos Hub stands on the shoulders of the [Chaos Toolkit][chaostoolkit] to
+provide a complete, user-friendly, platform to automate and collaborate on your
+Chaos Engineering and Resiliency efforts.
+
 [hub]: https://chaoshub.org
 [chaosiq]: https://chaosiq.io/
 [agpl]: https://www.gnu.org/licenses/agpl-3.0.en.html
+[chaostoolkit]: https://chaostoolkit.org/
 
 ## Get Started
 
