@@ -8,7 +8,7 @@ This would be great honeypot!
 You can run the Chaos Hub locally without too much difficulties provided
 you install the dependencies.
 
-## Python Requirements
+## Application Python Requirements
 
 The Chaos Hub is implemented in Python 3. It should support Python 3.5+ 
 but has only been tested against Python 3.7.
@@ -66,3 +66,15 @@ Once activated, install the dependencies as follows:
 (.venv) $ pip install -r app/requirements.txt
 ```
 
+## UI TypeScript dependencies
+
+In addition, you must install [npm][npm] on your machine and then deploy
+the dependencies to build the UI.
+
+[npm]: https://www.npmjs.com/
+
+```
+$ cd ui
+$ npm -g poi
+$ npm i
+```

@@ -17,6 +17,15 @@ $ source  .venv/bin/activate
 
 ## Install from sources
 
+First, build the UI:
+
+```
+$ cd ui
+$ npm run build
+```
+
+Now, install the application in your Python virtual environment:
+
 ```
 $ source  .venv/bin/activate
 (.venv) $ cd app
