@@ -67,19 +67,10 @@ through the requirements files. Then, simply run `python setup.py develop` and
 
 Once we have automated build, those tests will be also executed continously.
 
-The UI itself os developed in the `ui` repository. While all the static files
-are packaged into their own Docker image (JavaScript, css, images...), the
-HTML files are served by the application itself, and therefore need to be
-copied over in the `chaoshubapp/dashboard/templates` directory everytime
-they change.
-
-A simple command such as:
+The UI itself os developed in the `ui` repository.
 
 ```console
 $ cd ../ui
 $ npm run build
-$ cp -r dist/static ../app/chaoshubapp/dashboard && \
-    cp dist/index.html ../app/chaoshubapp/dashboard/templates/ && \
-    cp dist/landing.html ../app/chaoshubapp/dashboard/templates/
 ```
 
