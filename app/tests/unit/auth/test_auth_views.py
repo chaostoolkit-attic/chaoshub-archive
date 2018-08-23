@@ -260,7 +260,7 @@ def test_auth_redirect_to_home_on_signin(app: Flask):
                             nonce = generate_nonce_key("google")
                             resp = authed('google')
 
-                            assert resp.status_code == 302
+                            assert resp.status_code == 303
                             assert resp.location == "/"
 
                             hs.assert_called_with(
@@ -287,7 +287,7 @@ def test_auth_redirect_to_home_on_signup(app: Flask):
                             nonce = generate_nonce_key("google")
                             resp = authed('google')
 
-                            assert resp.status_code == 302
+                            assert resp.status_code == 303
                             assert resp.location == "/"
 
                             hs.assert_called_with(

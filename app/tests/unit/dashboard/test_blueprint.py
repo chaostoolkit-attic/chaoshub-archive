@@ -7,8 +7,8 @@ import cherrypy
 from flask import Flask
 from flask_caching import Cache
 
+from chaoshubdashboard.app import setup_db
 from chaoshubdashboard.model import db, get_db_conn_uri_from_env
-from chaoshubdashboard.dashboard.app import setup_db
 from chaoshubdashboard.settings import load_settings
 
 
@@ -32,9 +32,9 @@ def test_get_db_conn_uri_from_env():
         os.environ.pop("DB_NAME")
 
 
-@patch('chaoshubdashboard.dashboard.app.get_db_conn_uri_from_env', autospec=False)
+@patch('chaoshubdashboard.app.get_db_conn_uri_from_env', autospec=False)
 def test_setup_db(get_db_conn_uri_from_env):
-    load_settings(os.path.join(os.path.dirname(__file__), ".env"))
+    load_settings(os.path.join(os.path.dirname(__file__), "..", ".env.test"))
     get_db_conn_uri_from_env.return_value = os.getenv("DB_HOST")
 
     app = Flask(__name__)

@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
-from chaoshubdashboard.model import db
-from chaoshubdashboard.auth.model import Account, AccessToken, Client, \
-    ProviderToken
+import uuid 
 
 import dateparser
 import pytest
+import shortuuid
+
+from chaoshubdashboard.model import db
+from chaoshubdashboard.auth.model import Account, AccessToken, Client, \
+    ProviderToken
 
 
 def test_can_fetch_account(default_dataset):
@@ -81,7 +84,8 @@ def test_can_create_and_delete_account(default_dataset):
 
 
 def test_can_fetch_access_token(default_dataset):
-    token = AccessToken.query.filter(AccessToken.id==1).first()
+    token = AccessToken.query.filter(
+        AccessToken.id=="127e7132-c3a8-430e-a6c2-220e3b5d7796").first()
     assert token is not None
     assert token.access_token == "whatever"
     assert str(token.account_id) == "c1337e77-ccaf-41cf-a68c-d6e2026aef21"
@@ -97,11 +101,13 @@ def test_can_fetch_access_token_by_account_id(default_dataset):
 
 
 def test_access_token_to_dict(default_dataset):
-    token = AccessToken.query.filter(AccessToken.id==1).first()
+    token = AccessToken.query.filter(
+        AccessToken.id=="127e7132-c3a8-430e-a6c2-220e3b5d7796").first()
     d = token.to_dict()
 
     assert "id" in d
-    assert d["id"] == 1
+    assert d["id"] == shortuuid.encode(
+        uuid.UUID("127e7132-c3a8-430e-a6c2-220e3b5d7796"))
     assert "name" in d
     assert d["name"] == "my token"
     assert "access_token" in d
@@ -112,7 +118,7 @@ def test_access_token_to_dict(default_dataset):
 
 def test_can_create_and_delete_access_token(default_dataset):
     token = AccessToken(
-        id=20000,
+        id="223a1803-740d-4cd8-a832-295a37206a70",
         name="my token",
         access_token="whatever again",
         account_id="c1337e77-ccaf-41cf-a68c-d6e2026aef21"
@@ -129,7 +135,8 @@ def test_can_create_and_delete_access_token(default_dataset):
         except:
             pytest.fail("Failed to delete token")
         finally:
-            token = AccessToken.query.filter(AccessToken.id==20000).first()
+            token = AccessToken.query.filter(
+                AccessToken.id=="223a1803-740d-4cd8-a832-295a37206a70").first()
             assert token is None
 
 

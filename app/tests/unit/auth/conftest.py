@@ -18,7 +18,7 @@ from chaoshubdashboard.settings import load_settings
 @pytest.fixture(scope="session")
 @patch('chaoshubdashboard.app.get_db_conn_uri_from_env', autospec=False)
 def app(get_db_conn_uri_from_env) -> Flask:
-    load_settings(os.path.join(os.path.dirname(__file__), ".env"))
+    load_settings(os.path.join(os.path.dirname(__file__), "..", ".env.test"))
     get_db_conn_uri_from_env.return_value = os.getenv("DB_HOST")
     application = create_app(create_tables=False)
 
@@ -54,7 +54,7 @@ def default_dataset(app: Flask):
     )
 
     access_token = AccessToken(
-        id=1,
+        id="127e7132-c3a8-430e-a6c2-220e3b5d7796",
         name="my token",
         access_token="whatever",
         account_id="c1337e77-ccaf-41cf-a68c-d6e2026aef21",
