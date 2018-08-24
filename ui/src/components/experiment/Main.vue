@@ -204,7 +204,7 @@
         const workspace_name = this.$route.params.workspace
         const experiment_id = this.$route.params.experiment
         return axios.get(
-            '/'+org_name+'/'+workspace_name+'/experiment/'+experiment_id, {
+            '/'+org_name+'/'+workspace_name+'/experiment/'+experiment_id+'/context', {
             headers: {
               'Accept': 'application/json'
             }

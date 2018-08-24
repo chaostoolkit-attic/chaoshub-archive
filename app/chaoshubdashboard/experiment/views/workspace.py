@@ -6,7 +6,7 @@ from typing import Any, Dict
 import uuid
 
 from flask import abort, Blueprint, current_app, redirect, render_template, \
-    jsonify, request, send_file, session, url_for
+    jsonify, request, send_file, session, url_for, Response
 from flask_accept import accept, accept_fallback
 import shortuuid
 import simplejson as json
@@ -51,10 +51,33 @@ def schedule(user_claim: UserClaim, experiment_id: str, org: str,
 
 
 @workspace_experiment_service.route('<string:experiment_id>', methods=['GET'])
-@index.support("application/json")
+@index.support("application/json", "application/x-yaml")
+@load_user(allow_anonymous=True)
+def raw(user_claim: UserClaim, experiment_id: str, org: str, workspace: str):
+    experiment = load_experiment(user_claim, experiment_id, org, workspace)
+
+    mimetypes = request.headers.get("Accept")
+    if "application/json" in mimetypes:
+        payload = prepare_raw(experiment, fmt="json")
+        content_type = "application/json"
+    elif "application/x-yaml" in mimetypes:
+        payload = prepare_raw(experiment, fmt="yaml")
+        content_type = "application/x-yaml"
+    else:
+        return abort(406)
+
+    return Response(payload, status=200, content_type=content_type)
+
+
+@workspace_experiment_service.route(
+    '<string:experiment_id>/context', methods=['GET'])
+@accept("application/json")
 @load_user(allow_anonymous=True)
 def context(user_claim: UserClaim, experiment_id: str, org: str,
             workspace: str):
+    url = url_for(
+        "workspace_experiment_service.index", org=org, workspace=workspace,
+        experiment_id=experiment_id, _external=True)
     experiment_id = shortuuid.decode(experiment_id)
     experiment = Experiment.query.filter(Experiment.id==experiment_id).first()
     if not experiment:
@@ -70,6 +93,7 @@ def context(user_claim: UserClaim, experiment_id: str, org: str,
     e = experiment.to_public_dict()
     e["workspace"] = w
     e["requested_by"] = None
+    e["url"] = url
 
     if user_claim:
         e["requested_by"] = DashboardService.get_user_details(
@@ -160,23 +184,24 @@ def download_yaml(user_claim: UserClaim, experiment_id: str,
         'application/x-yaml')
 
 
-def download(user_claim: UserClaim, experiment_id: str, org: str,
-             workspace: str, fmt: str = 'json',
-             filename: str = 'experiment.json',
-             mimetype: str = 'application/json'):
-
+def load_experiment(user_claim: UserClaim, experiment_id: str, org: str,
+                    workspace: str) -> Experiment:
     experiment_id = shortuuid.decode(experiment_id)
     experiment = Experiment.query.filter(Experiment.id==experiment_id).first()
     if not experiment:
-        return abort(404)
+        raise abort(404)
 
     w = DashboardService.get_workspace(user_claim, org, workspace)
     if not w:
-        return abort(404)
+        raise abort(404)
 
     if "view" not in w["context"]["acls"]:
-        return abort(404)
+        raise abort(404)
 
+    return experiment
+
+
+def prepare_raw(experiment: Experiment, fmt: str = 'json') -> str:
     if fmt == 'json':
         payload = json.dumps(experiment.payload, indent=2)
     elif fmt == 'yaml':
@@ -190,7 +215,17 @@ def download(user_claim: UserClaim, experiment_id: str, org: str,
             payload, indent=2, explicit_start=True, default_flow_style=False,
             Dumper=yamlloader.ordereddict.CSafeDumper)
     else:
-        return abort(400)
+        raise abort(400)
+
+    return payload
+
+
+def download(user_claim: UserClaim, experiment_id: str, org: str,
+             workspace: str, fmt: str = 'json',
+             filename: str = 'experiment.json',
+             mimetype: str = 'application/json'):
+    experiment = load_experiment(user_claim, experiment_id, org, workspace)
+    payload = prepare_raw(experiment, fmt=fmt)
 
     data = io.BytesIO(payload.encode('utf-8'))
     data.seek(0)

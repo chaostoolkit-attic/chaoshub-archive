@@ -79,7 +79,7 @@
     methods: {
       getCLIValue: function (): string {
         return 'chaos run --org ' + this.experiment.workspace.org.name + ' --workspace ' + this.experiment.workspace.name +
-          ' http://dev.chaoshub.com:30001/experiment/' + this.experiment.id
+          ' ' + this.experiment.url
       },
       hasPermissions: function (): boolean {
           return this.experiment && this.experiment.requested_by &&
