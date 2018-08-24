@@ -1,6 +1,6 @@
 {
   "name": "chaoshub-ui",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "ChaosHub Frontend UI",
   "main": "poi.config.js",
   "dependencies": {
