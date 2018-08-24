@@ -126,6 +126,7 @@ def revoke_token(token_id: str, user_claim: UserClaim):
     if request.headers.get('Accept') != 'application/json':
         return abort(405)
 
+    token_id = shortuuid.decode(token_id)
     AuthService.revoke_user_access_token(user_claim, token_id)
 
     record_activity({
