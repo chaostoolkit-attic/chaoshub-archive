@@ -59,7 +59,8 @@ def dashboard(user_claim: Dict[str, Any], org: Org,
         info["requested_by"] = caller
 
     exps = ExperimentService.get_workspace_last_experiments(workspace.id)
-    info["activities"] = get_caller_workspace_activities(workspace, caller)
+    info["activities"] = get_caller_workspace_activities(  # type: ignore
+        workspace, caller)
     info["experiments"] = exps
     info["org"] = org.to_short_dict()
     info["workspace"] = workspace.to_dict()

@@ -20,7 +20,7 @@ auth_service = Blueprint("auth_service", __name__)
 
 @auth_service.route('signup/local', methods=["POST"])
 @accept("application/json")
-def signup_local() -> Response:
+def signup_local() -> str:
     payload = request.json
 
     username = payload.get("username")
@@ -54,12 +54,12 @@ def signup_local() -> Response:
     session.permanent = True
     current_app.logger.info("User signed up: {}".format(str(account.id)))
 
-    return "", 200
+    return ""
 
 
 @auth_service.route('signin/local', methods=["POST"])
 @accept("application/json")
-def signin_local() -> Response:
+def signin_local() -> str:
     payload = request.json
 
     username = payload.get("username")
@@ -93,7 +93,7 @@ def signin_local() -> Response:
     session.permanent = True
     current_app.logger.info("User signed in: {}".format(str(account.id)))
 
-    return "", 200
+    return ""
 
 
 @auth_service.route('signin/with/<provider>', methods=["GET"])

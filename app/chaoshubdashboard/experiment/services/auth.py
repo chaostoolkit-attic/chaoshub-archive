@@ -13,5 +13,6 @@ def get_user_access_tokens(user_claim: UserClaim) -> List[AccessToken]:
     return get_active_access_tokens(user_claim)
 
 
-def get_user_access_token(user_claim: UserClaim, token_id: str) -> AccessToken:
+def get_user_access_token(user_claim: UserClaim,
+                          token_id: str) -> Optional[AccessToken]:
     return get_access_token(user_claim, token_id)

@@ -14,9 +14,9 @@ from sqlalchemy.sql.expression import cast
 from chaoshubdashboard.model import db
 
 from .model import WorkpacesMembers, OrgsMembers, UserPrivacy, Org, \
-    OrgType, UserPrivacy, UserAccount, UserInfo, Workspace, WorkspaceType, \
-    ExecutionVisibility, Activity, ActivityVisibility
-from .types import ProfileInfo, UserClaim
+    OrgType, UserPrivacy, UserAccount, UserInfo, WorkspaceType, \
+    ExecutionVisibility, Activity, ActivityVisibility, Workspace
+from .types import ProfileInfo, UserClaim, Workspace as _Workspace
 
 __all__ = ["fully_delete_user_info", "register_user", "create_user_account",
            "set_user_profile", "set_user_privacy", "get_workspace_by_id",
@@ -294,7 +294,7 @@ def lookup_workspaces(o: Org, q: str, account_id: str,
     return [m.workspace.to_short_dict() for m in matches]
 
 
-def get_workspaces(user_claim: UserClaim) -> List[Workspace]:
+def get_workspaces(user_claim: UserClaim) -> List[_Workspace]:
     account_id = user_claim["id"]
     account = UserAccount.query.filter(UserAccount.id==account_id).first()
     workspaces = []
@@ -309,7 +309,7 @@ def get_workspaces(user_claim: UserClaim) -> List[Workspace]:
 
 
 def get_workspace_by_id(user_claim: UserClaim,
-                        workspace_id: str) -> Optional[Workspace]:
+                        workspace_id: str) -> Optional[_Workspace]:
     w = Workspace.get_by_id(workspace_id)
     if not w:
         return None
@@ -324,7 +324,7 @@ def get_workspace_by_id(user_claim: UserClaim,
 
 
 def get_workspace(user_claim: UserClaim, org_name: str,
-                  workspace_name: str) -> Optional[Workspace]:
+                  workspace_name: str) -> Optional[_Workspace]:
     o = Org.find_by_name(org_name)
     if not o:
         return None

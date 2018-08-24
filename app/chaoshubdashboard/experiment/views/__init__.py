@@ -33,7 +33,7 @@ def index(user_claim: Dict[str, Any]) -> str:
     for exp in exps:
         e = exp.to_public_dict(with_payload=False)
         e["workspace"] = DashboardService.get_experiment_workspace(
-            e.workspace_id)
+            user_claim, e.workspace_id)
         result.append(e)
 
     return jsonify(result)

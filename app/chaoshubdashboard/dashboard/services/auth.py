@@ -15,7 +15,7 @@ def new_access_token(user_claim: UserClaim, token_name: str) -> AccessToken:
     return token
 
 
-def revoke_user_access_token(user_claim: UserClaim, token_id: int):
+def revoke_user_access_token(user_claim: UserClaim, token_id: str):
     """
     Revoke the given access token of that user.
     """

@@ -31,7 +31,8 @@ def get_user_workspace(user_claim: UserClaim, org_name: str,
     return get_workspace(user_claim, org_name, workspace_name)
 
 
-def get_experiment_workspace(workspace_id: str) -> Optional[Workspace]:
+def get_experiment_workspace(user_claim: UserClaim,
+                             workspace_id: str) -> Optional[Workspace]:
     """
     Retrieve a workspace by its id.
     """

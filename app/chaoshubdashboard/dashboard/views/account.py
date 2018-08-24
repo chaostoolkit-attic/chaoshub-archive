@@ -166,10 +166,10 @@ def orgs(user_claim: UserClaim):
     }
 
     if assocs.has_prev:
-        result["paging"]["prev"] = assocs.prev_num
+        result["paging"]["prev"] = assocs.prev_num  # type: ignore
 
     if assocs.has_next:
-        result["paging"]["next"] = assocs.next_num
+        result["paging"]["next"] = assocs.next_num  # type: ignore
 
     return jsonify(result)
 
@@ -186,7 +186,7 @@ def new_org(user_claim: UserClaim):
     org_settings = DEFAULT_ORG_SETTINGS.copy()
     settings = org.get("settings")
     for k in ("url", "email", "description"):
-        org_settings["meta"][k] = settings.get(k)
+        org_settings["meta"][k] = settings.get(k)  # type: ignore
 
     account = UserAccount.query.filter(
         UserAccount.id==user_claim["id"]).first()
@@ -258,10 +258,10 @@ def workspaces(user_claim: UserClaim):
     }
 
     if workspaces.has_prev:
-        result["paging"]["prev"] = workspaces.prev_num
+        result["paging"]["prev"] = workspaces.prev_num  # type: ignore
 
     if workspaces.has_next:
-        result["paging"]["next"] = workspaces.next_num
+        result["paging"]["next"] = workspaces.next_num  # type: ignore
 
     return jsonify(result)
 

@@ -252,10 +252,12 @@ def update_provider_token(name: str, account: Account,
     return item
 
 
-def get_access_token(user_claim: UserClaim, token_id: str) -> Dict[str, Any]:
+def get_access_token(user_claim: UserClaim,
+                     token_id: str) -> Optional[Dict[str, Any]]:
     token = AccessToken.query.filter(AccessToken.id==token_id).first()
     if token:
         return token.to_dict()
+    return None
 
 
 def get_active_access_tokens(user_claim: UserClaim) -> List[Dict[str, Any]]:
@@ -293,7 +295,7 @@ def generate_access_token(user_claim: Dict[str, Any], name: str,
     return access_token
 
 
-def revoke_access_token(account_id: str, token_id: int):
+def revoke_access_token(account_id: str, token_id: str):
     """
     Revoke an access token for the given user.
     """

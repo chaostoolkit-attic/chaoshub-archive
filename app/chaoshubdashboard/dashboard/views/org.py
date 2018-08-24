@@ -76,7 +76,7 @@ def dashboard(user_claim: Dict[str, Any], org: Org) -> str:
         caller["org_owner"] = org_owner = org.is_owner(account_id)
         info["requested_by"] = caller
 
-    info["activities"] = get_caller_org_activities(org, caller)
+    info["activities"] = get_caller_org_activities(org, caller)  # type: ignore
     o_members = OrgsMembers.query.filter(
         OrgsMembers.org_id==org.id).limit(5)
     info["members"] = [m.account.to_short_dict() for m in o_members]

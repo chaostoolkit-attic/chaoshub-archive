@@ -48,7 +48,7 @@ def context(user_claim: UserClaim, org: Org, workspace: Workspace,
     if request.headers.get('Accept') != 'application/json':
         return abort(405)
 
-    context = {
+    context: Dict[str, Any] = {
         "tokens": [],
         "schedulers": []
     }
