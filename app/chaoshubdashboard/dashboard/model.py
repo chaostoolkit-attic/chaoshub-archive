@@ -549,7 +549,8 @@ class Activity(db.Model):  # type: ignore
         experiment_id = None
         if self.experiment_id:
             experiment_id = shortuuid.encode(self.experiment_id)
-        if execution_id:
+        execution_id = None
+        if self.execution_id:
             execution_id = shortuuid.encode(self.execution_id)
 
         return {
