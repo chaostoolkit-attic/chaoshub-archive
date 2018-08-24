@@ -63,7 +63,7 @@ class Account(db.Model):  # type: ignore
             "client": self.client.to_dict() if self.client else None,
             "tokens": [t.to_dict() for t in self.access_tokens]
         }
-    
+
     def turn_inactive(self):
         self.is_active = False
         self.inactive_since = datetime.utcnow()

@@ -16,7 +16,7 @@ class CronScheduler:
     settings_key_prefix = "SCHED_CRON_"
 
     def __init__(self):
-        self.cron  = CronTab(user=True)
+        self.cron = CronTab(user=True)
         self.jobs = {}
 
     def shutdown(self):
@@ -45,7 +45,7 @@ class CronScheduler:
             job_id = str(uuid.uuid4)
             self.jobs[job_id] = job
             self.cron.write()
-        
+
             return {
                 "scheduler": CronScheduler.name,
                 "job_id": job_id

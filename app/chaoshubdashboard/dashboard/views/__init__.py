@@ -86,9 +86,9 @@ def signin() -> str:
 @load_user(allow_anonymous=True)
 def signed(user_claim: UserClaim) -> str:
     if request.headers.get('Accept') != 'application/json':
-        return abort(405)   
-    
-    return jsonify(user_claim!=None)
+        return abort(405)
+
+    return jsonify(user_claim is not None)
 
 
 @dashboard_service.route('users/lookup', methods=["GET"])

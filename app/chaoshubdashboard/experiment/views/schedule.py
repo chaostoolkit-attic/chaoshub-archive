@@ -184,7 +184,7 @@ def set_chaoshub_extension_to_experiment(experiment: Experiment,
                                          definition: Dict[str, Any]):
     if "extensions" not in definition:
         definition["extensions"] = []
-    
+
     for ext in definition["extensions"]:
         ext_name = ext.get("name")
         if ext_name == "chaoshub":

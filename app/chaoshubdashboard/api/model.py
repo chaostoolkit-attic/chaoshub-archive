@@ -113,24 +113,21 @@ class APIAccessToken(db.Model):  # type: ignore
             APIAccessToken.access_token==access_token).first()
 
     @staticmethod
-    def get_by_id_for_account(account_id: str, 
-                              token_id: str) \
-                              -> Optional['APIAccessToken']:
+    def get_by_id_for_account(account_id: str,
+                              token_id: str) -> Optional['APIAccessToken']:
         return APIAccessToken.query.filter(
             APIAccessToken.account_id==account_id,
             APIAccessToken.id==token_id).first()
 
     @staticmethod
-    def get_all_for_account(account_id: str) \
-                            -> List['APIAccessToken']:
+    def get_all_for_account(account_id: str) -> List['APIAccessToken']:
         return APIAccessToken.query.filter(
             APIAccessToken.account_id==account_id).all()
 
     @staticmethod
-    def get_active_for_account(account_id: str) \
-                               -> List['APIAccessToken']:
+    def get_active_for_account(account_id: str) -> List['APIAccessToken']:
         non_revoked_tokens = APIAccessToken.query.filter(
-            APIAccessToken.revoked==False,
+            APIAccessToken.revoked is False,
             APIAccessToken.account_id==account_id).all()
 
         return [token for token in non_revoked_tokens if token.is_active()]

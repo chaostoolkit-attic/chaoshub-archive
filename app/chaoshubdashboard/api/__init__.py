@@ -45,7 +45,8 @@ def load_context(permissions: Tuple[str, ...] = ('read',)):
             if not workspace:
                 raise abort(404)
 
-            if set(workspace["context"]["acls"]).issubset(expected_permissions):
+            acls = workspace["context"]["acls"]
+            if set(acls).issubset(expected_permissions):
                 raise abort(404)
 
             kwargs["org"] = workspace["org"]
@@ -92,7 +93,7 @@ def load_experiment(required: bool = True):
 
                 if required and not experiment:
                     return abort(404)
-                
+
                 kwargs["experiment"] = experiment
             return f(*args, **kwargs)
         return wrapped

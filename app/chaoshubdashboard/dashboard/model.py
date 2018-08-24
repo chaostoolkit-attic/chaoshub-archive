@@ -44,7 +44,7 @@ class OrgsMembers(db.Model):  # type: ignore
     __bind_key__ = 'dashboard_service'
     __tablename__ = "orgs_members"
     org_id = db.Column(
-        UUIDType(binary=False), db.ForeignKey('org.id'),primary_key=True)
+        UUIDType(binary=False), db.ForeignKey('org.id'), primary_key=True)
     account_id = db.Column(
         UUIDType(binary=False), db.ForeignKey('user_account.id'),
         primary_key=True)
@@ -76,7 +76,7 @@ class UserAccount(db.Model):  # type: ignore
         'Org', secondary="orgs_members", lazy='subquery',
         backref=db.backref('accounts', lazy=True))
     # direct access to the unique personal org
-    # but this org is also part of the many to many relationship
+    # but this org is also part of the many to many relationship
     personal_org = db.relationship(
         'Org', backref='account', uselist=False, cascade="all, delete-orphan")
 
@@ -205,7 +205,7 @@ DEFAULT_WORKSPACE_SETTINGS = {
         }
     }
 }
-    
+
 
 class Workspace(db.Model):  # type: ignore
     __bind_key__ = 'dashboard_service'
@@ -277,7 +277,7 @@ class Workspace(db.Model):  # type: ignore
         """
         return WorkpacesMembers.query.filter(
             WorkpacesMembers.workspace_id==self.id,
-            WorkpacesMembers.is_owner==True,
+            WorkpacesMembers.is_owner is True,
             WorkpacesMembers.account_id==account_id).first() is not None
 
     def has_single_owner(self) -> bool:
@@ -286,7 +286,7 @@ class Workspace(db.Model):  # type: ignore
         """
         return WorkpacesMembers.query.filter(
             WorkpacesMembers.workspace_id==self.id,
-            WorkpacesMembers.is_owner==True).count() == 1
+            WorkpacesMembers.is_owner is True).count() == 1
 
     def make_collaborator(self, account_id: Union[str, uuid.UUID]):
         """
@@ -377,7 +377,7 @@ class Org(db.Model):  # type: ignore
                 "id": shortuuid.encode(w.id),
                 "name": w.name
             })
- 
+
         return {
             "id": shortuuid.encode(self.id),
             "name": self.name,
@@ -417,14 +417,14 @@ class Org(db.Model):  # type: ignore
         Lookup an organization by its identifier
         """
         return Org.query.filter(Org.id==org_id).first()
-    
+
     @staticmethod
     def find_by_name(org_name: str) -> 'Org':
         """
         Lookup an organization by its name
         """
         return Org.query.filter(Org.name_lower==org_name.lower()).first()
-    
+
     def find_workspace_by_name(self,
                                workspace_name: str) -> Optional[Workspace]:
         """
@@ -450,7 +450,7 @@ class Org(db.Model):  # type: ignore
         Return `True` when the given account is an owner of the organization
         """
         return OrgsMembers.query.filter(
-            OrgsMembers.org_id==self.id, OrgsMembers.is_owner==True,
+            OrgsMembers.org_id==self.id, OrgsMembers.is_owner is True,
             OrgsMembers.account_id==account_id).first() is not None
 
     def has_single_owner(self) -> bool:
@@ -459,7 +459,7 @@ class Org(db.Model):  # type: ignore
         """
         return OrgsMembers.query.filter(
             OrgsMembers.org_id==self.id,
-            OrgsMembers.is_owner==True).count() == 1
+            OrgsMembers.is_owner is True).count() == 1
 
     def make_member(self, account_id: Union[str, uuid.UUID]):
         """
@@ -543,9 +543,14 @@ class Activity(db.Model):  # type: ignore
 
     def to_dict(self):
         org_id = shortuuid.encode(self.org_id) if self.org_id else None
-        workspace_id = shortuuid.encode(self.workspace_id) if self.workspace_id else None
-        experiment_id = shortuuid.encode(self.experiment_id) if self.experiment_id else None
-        execution_id = shortuuid.encode(self.execution_id) if self.execution_id else None
+        workspace_id = None
+        if self.workspace_id:
+            workspace_id = shortuuid.encode(self.workspace_id)
+        experiment_id = None
+        if self.experiment_id:
+            experiment_id = shortuuid.encode(self.experiment_id)
+        if execution_id:
+            execution_id = shortuuid.encode(self.execution_id)
 
         return {
             "id": shortuuid.encode(self.id),
@@ -573,7 +578,7 @@ class Activity(db.Model):  # type: ignore
             visibility = ActivityVisibility.collaborator
         elif visibility in (4, "owner"):
             visibility = ActivityVisibility.owner
-    
+
         org_id = activity.get("org_id")
         if org_id:
             org_id = shortuuid.decode(org_id)
@@ -605,7 +610,7 @@ class Activity(db.Model):  # type: ignore
 
     @staticmethod
     def get_recents_for_account(account_id: Union[str, uuid.UUID],
-                                visibility: ActivityVisibility, 
+                                visibility: ActivityVisibility,
                                 last: int = 10) -> List['Activity']:
         return Activity.query.filter(
             Activity.account_id==account_id,
@@ -615,7 +620,7 @@ class Activity(db.Model):  # type: ignore
 
     @staticmethod
     def get_recents_for_org(org_id: Union[str, uuid.UUID],
-                            visibility: ActivityVisibility, 
+                            visibility: ActivityVisibility,
                             last: int = 10) -> List['Activity']:
         return Activity.query.filter(
             Activity.org_id==org_id,
@@ -625,7 +630,7 @@ class Activity(db.Model):  # type: ignore
 
     @staticmethod
     def get_recents_for_workspace(workspace_id: Union[str, uuid.UUID],
-                                  visibility: ActivityVisibility, 
+                                  visibility: ActivityVisibility,
                                   last: int = 10) -> List['Activity']:
         return Activity.query.filter(
             Activity.workspace_id==workspace_id,

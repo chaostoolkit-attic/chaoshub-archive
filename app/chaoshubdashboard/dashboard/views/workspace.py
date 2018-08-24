@@ -19,7 +19,7 @@ from ..types import UserClaim
 from ..validators import validate_workspace_name
 
 
-__all__ = ["get_workspace", "get_workspaces", 
+__all__ = ["get_workspace", "get_workspaces",
            "is_workspace_visible_to_user", "workspace_service"]
 
 workspace_service = Blueprint("workspace_service", __name__)
@@ -57,7 +57,7 @@ def dashboard(user_claim: Dict[str, Any], org: Org,
         caller["workspace_collaborator"] = \
             workspace.is_collaborator(account_id)
         info["requested_by"] = caller
-        
+
     exps = ExperimentService.get_workspace_last_experiments(workspace.id)
     info["activities"] = get_caller_workspace_activities(workspace, caller)
     info["experiments"] = exps
@@ -129,7 +129,7 @@ def collaborators(user_claim: Dict[str, Any], org: Org,
     account = UserAccount.query.filter(UserAccount.id==account_id).first()
 
     if not workspace.is_collaborator(account_id) or \
-        not org.is_member(account_id):
+       not org.is_member(account_id):
         return abort(404)
 
     w_collaborators = WorkpacesMembers.query.filter(
@@ -138,7 +138,7 @@ def collaborators(user_claim: Dict[str, Any], org: Org,
 
     users: List[Dict[str, Any]] = []
     for m in w_collaborators.items:
-        d = m.account.to_short_dict() 
+        d = m.account.to_short_dict()
         d["workspace_owner"] = m.is_owner
         users.append(d)
 
@@ -205,7 +205,7 @@ def new_name(user_claim: UserClaim, org: Org, workspace: Workspace):
 @load_org_and_workspace(
     redirect_to="workspace_service.add_user_as_collaborator",
     allow_anonymous=False)
-def add_user_as_collaborator(user_claim: Dict[str, Any], org: Org, 
+def add_user_as_collaborator(user_claim: Dict[str, Any], org: Org,
                              workspace: Workspace):
     if request.headers.get('Accept') != 'application/json':
         return render_template('index.html')

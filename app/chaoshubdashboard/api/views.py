@@ -22,6 +22,7 @@ __all__ = ["api"]
 api = Blueprint("api", __name__)
 require_oauth = ResourceProtector()
 
+
 def user_authenticated_on_api(sender: ResourceProtector,
                               token: APIAccessToken):
     """
@@ -74,7 +75,7 @@ def upload_experiment(org: Org, workspace: Workspace, payload: Dict[str, Any],
     response.headers["Location"] = url_for(
         "workspace_experiment_service.index", org=org["name"],
         workspace=workspace["name"], experiment_id=x_id)
-    
+
     return response
 
 

@@ -221,7 +221,7 @@ def members(user_claim: Dict[str, Any], org: Org) -> str:
 
     users: List[Dict[str, Any]] = []
     for m in o_members.items:
-        d = m.account.to_short_dict() 
+        d = m.account.to_short_dict()
         d["org_owner"] = m.is_owner
         users.append(d)
 

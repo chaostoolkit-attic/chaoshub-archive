@@ -53,8 +53,8 @@ def signup_local() -> Response:
     session['sid'] = str(account.id)
     session.permanent = True
     current_app.logger.info("User signed up: {}".format(str(account.id)))
-    
-    return "", 200  
+
+    return "", 200
 
 
 @auth_service.route('signin/local', methods=["POST"])

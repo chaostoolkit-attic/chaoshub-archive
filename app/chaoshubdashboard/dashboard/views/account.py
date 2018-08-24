@@ -233,7 +233,7 @@ def workspaces(user_claim: UserClaim):
             Workspace.id.in_(
                 db.session.query(WorkpacesMembers.workspace_id).filter(
                     WorkpacesMembers.account_id==account_id)))
-        ).paginate(max_per_page=5, error_out=False)
+    ).paginate(max_per_page=5, error_out=False)
 
     orgs = []
     for membership in orgs_memberships:

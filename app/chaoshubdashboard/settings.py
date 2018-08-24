@@ -43,7 +43,7 @@ def load_settings(env_path: str):
 
 def configure_app(app: Flask):
     """
-    Configure the application from environmental variables. 
+    Configure the application from environmental variables.
     """
     app.url_map.strict_slashes = False
     app.debug = True if os.getenv('CHAOSHUB_DEBUG') else False
@@ -77,4 +77,3 @@ def configure_app(app: Flask):
     if app.config["CACHE_TYPE"] == "redis":
         app.config["CACHE_REDIS_HOST"] = os.getenv("CACHE_REDIS_HOST")
         app.config["CACHE_REDIS_PORT"] = os.getenv("CACHE_REDIS_PORT", 6379)
-

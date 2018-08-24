@@ -25,6 +25,7 @@ __all__ = ["workspace_experiment_service"]
 workspace_experiment_service = Blueprint(
     "workspace_experiment_service", __name__)
 
+
 @workspace_experiment_service.route('<string:experiment_id>', methods=['GET'])
 @accept_fallback
 @load_user(allow_anonymous=True)
@@ -52,7 +53,8 @@ def schedule(user_claim: UserClaim, experiment_id: str, org: str,
 @workspace_experiment_service.route('<string:experiment_id>', methods=['GET'])
 @index.support("application/json")
 @load_user(allow_anonymous=True)
-def context(user_claim: UserClaim, experiment_id: str, org: str, workspace: str):
+def context(user_claim: UserClaim, experiment_id: str, org: str,
+            workspace: str):
     experiment_id = shortuuid.decode(experiment_id)
     experiment = Experiment.query.filter(Experiment.id==experiment_id).first()
     if not experiment:
@@ -68,7 +70,7 @@ def context(user_claim: UserClaim, experiment_id: str, org: str, workspace: str)
     e = experiment.to_public_dict()
     e["workspace"] = w
     e["requested_by"] = None
-    
+
     if user_claim:
         e["requested_by"] = DashboardService.get_user_details(
             user_claim, shortuuid.decode(w["org"]["id"]),

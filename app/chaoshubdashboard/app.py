@@ -181,7 +181,7 @@ def setup_basic_security(app: Flask):
     csp["font-src"].append("'unsafe-inline'")
 
     csp["default-src"] = csp["default-src"].split(' ')
-    #csp["default-src"].append("'self'")
+    # csp["default-src"].append("'self'")
 
     csp["img-src"] = []
     csp["img-src"].append("'self'")

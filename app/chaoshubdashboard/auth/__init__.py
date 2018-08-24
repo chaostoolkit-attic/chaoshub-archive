@@ -41,7 +41,7 @@ OAUTH_BACKENDS = {
     Google.OAUTH_NAME: Google,
     GitHub.OAUTH_NAME: GitHub,
     Gitlab.OAUTH_NAME: Gitlab,
-    Bitbucket.OAUTH_NAME: Bitbucket 
+    Bitbucket.OAUTH_NAME: Bitbucket
 }
 OAUTH_REMOTE_APPS = dict()
 
@@ -204,7 +204,6 @@ def log_user_in(username: str, password: str) -> Optional[Account]:
         return None
     return Account.query.filter(Account.id==local.account_id).first()
 
-    
 
 def register_account(profile: ProfileInfo, oauth_provider: str) -> Account:
     """
@@ -263,7 +262,7 @@ def get_active_access_tokens(user_claim: UserClaim) -> List[Dict[str, Any]]:
     account_id = user_claim["id"]
     tokens = AccessToken.query.filter(
         AccessToken.account_id==account_id,
-        AccessToken.revoked==False).all()
+        AccessToken.revoked is False).all()
     return [token.to_dict() for token in tokens]
 
 
@@ -304,7 +303,7 @@ def revoke_access_token(account_id: str, token_id: int):
         token.expires_in = -3600
         token.revoked = True
         db.session.commit()
-    
+
         APIService.revoke_access_token(token)
 
 
@@ -324,7 +323,7 @@ def update_access_token(access_token: Dict[str, Any]):
 def encode_as_jwt(payload: Dict[str, Any], secret_key: str,
                   expire_in: int = 60) -> str:
     """
-    Encode the given data in a JWT payload. 
+    Encode the given data in a JWT payload.
     """
     payload = deepcopy(payload)
     now = datetime.utcnow()
@@ -353,7 +352,7 @@ def unsign_value(app: Flask, signed_value: str) -> Optional[Dict[str, Any]]:
         app.logger.error(
             "Failed to unsign {}".format(signed_value), exc_info=x)
         return None
-    
+
     exp = decoded["exp"]
     now = datetime.utcnow()
     if timegm(now.utctimetuple()) > exp:

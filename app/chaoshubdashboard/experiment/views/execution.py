@@ -50,5 +50,5 @@ def index(user_claim: UserClaim, org: Org, workspace: Workspace,
     result = []
     for execution in executions:
         result.append(execution.to_dict(visibility))
-    
+
     return jsonify(result)

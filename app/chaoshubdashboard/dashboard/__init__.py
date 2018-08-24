@@ -225,11 +225,11 @@ def lookup_users(q: str, count: int = 10) -> List[Dict[str, str]]:
             UserInfo.fullname.ilike("%{}%".format(q))
         )
     ).limit(count)
-    
+
     return [{
-       "id": shortuuid.encode(m.account_id),
-       "name": m.fullname,
-       "username": m.username 
+        "id": shortuuid.encode(m.account_id),
+        "name": m.fullname,
+        "username": m.username
     } for m in matches]
 
 
@@ -240,15 +240,15 @@ def lookup_members(o: Org, q: str, count: int = 10) -> List[Dict[str, str]]:
 
     matches = UserAccount.query.filter(UserAccount.id.in_(
         db.session.query(OrgsMembers.account_id)
-            .filter(OrgsMembers.org_id==o.id)\
-            .filter(OrgsMembers.account_id.in_(
-                db.session.query(UserInfo.account_id).filter(
-                    or_(
-                        UserInfo.username.ilike("%{}%".format(q)),
-                        UserInfo.fullname.ilike("%{}%".format(q))
-                    )
+        .filter(OrgsMembers.org_id==o.id)
+        .filter(OrgsMembers.account_id.in_(
+            db.session.query(UserInfo.account_id).filter(
+                or_(
+                    UserInfo.username.ilike("%{}%".format(q)),
+                    UserInfo.fullname.ilike("%{}%".format(q))
                 )
-            )).limit(count)))
+            )
+        )).limit(count)))
 
     return [m.to_short_dict() for m in matches]
 
@@ -261,15 +261,15 @@ def lookup_collaborators(w: Workspace, q: str,
 
     matches = UserAccount.query.filter(UserAccount.id.in_(
         db.session.query(WorkpacesMembers.account_id)
-            .filter(WorkpacesMembers.workspace_id==w.id)\
-            .filter(WorkpacesMembers.account_id.in_(
-                db.session.query(UserInfo.account_id).filter(
-                    or_(
-                        UserInfo.username.ilike("%{}%".format(q)),
-                        UserInfo.fullname.ilike("%{}%".format(q))
-                    )
+        .filter(WorkpacesMembers.workspace_id==w.id)
+        .filter(WorkpacesMembers.account_id.in_(
+            db.session.query(UserInfo.account_id).filter(
+                or_(
+                    UserInfo.username.ilike("%{}%".format(q)),
+                    UserInfo.fullname.ilike("%{}%".format(q))
                 )
-            )).limit(count)))
+            )
+        )).limit(count)))
 
     return [m.to_short_dict() for m in matches]
 
@@ -379,7 +379,7 @@ def is_workspace_viewable(account_id: Union[str, None], o: Org,
     """
     if not o:
         return False
-        
+
     if not w:
         return False
 
@@ -391,7 +391,7 @@ def is_workspace_viewable(account_id: Union[str, None], o: Org,
         w_membership = WorkpacesMembers.query.filter(
             WorkpacesMembers.account_id==account_id,
             WorkpacesMembers.workspace_id==w.id).first()
-        
+
         # personal workspace/not owner? => not allowed
         if w.kind == WorkspaceType.personal and \
             not (w_membership and w_membership.is_owner):
@@ -412,14 +412,14 @@ def is_workspace_viewable(account_id: Union[str, None], o: Org,
 def is_workspace_writable(account_id: str, o: Org, w: Workspace) -> bool:
     if not o:
         return False
-        
+
     if not w:
         return False
 
     assoc = WorkpacesMembers.query.filter(
         WorkpacesMembers.account_id==account_id,
         WorkpacesMembers.workspace_id==w.id).first()
-    
+
     if not (assoc and assoc.is_owner):
         return False
 
@@ -436,12 +436,12 @@ def is_workspace_writable(account_id: str, o: Org, w: Workspace) -> bool:
 def is_workspace_owner(account_id: str, o: Org, w: Workspace) -> bool:
     if not o:
         return False
-        
+
     if not w:
         return False
 
     assoc = WorkpacesMembers.query.filter(
-        WorkpacesMembers.is_owner==True,
+        WorkpacesMembers.is_owner is True,
         WorkpacesMembers.account_id==account_id,
         WorkpacesMembers.workspace_id==w.id).first()
 
@@ -469,7 +469,7 @@ def is_org_viewable(account_id: str, o: Org) -> bool:
 
     if o.kind == OrgType.collaborative:
         return True
-       
+
     assoc = OrgsMembers.query.filter(
         OrgsMembers.account_id==account_id,
         OrgsMembers.org_id==o.id).first()
@@ -484,9 +484,9 @@ def is_org_viewable(account_id: str, o: Org) -> bool:
 def can_org_be_deleted(account_id: str, o: Org) -> bool:
     if not o:
         return False
-       
+
     assoc = OrgsMembers.query.filter(
-        OrgsMembers.is_owner==True,
+        OrgsMembers.is_owner is True,
         OrgsMembers.account_id==account_id,
         OrgsMembers.org_id==o.id).first()
 
@@ -518,7 +518,7 @@ def get_org_from_url(org: str, redirect_to: str) -> Org:
 
     if organization.name != org:
         # the user likely called with a different case in the url
-        # we prefer to redirect to the correct url for better visibility
+        # we prefer to redirect to the correct url for better visibility
         url = "/{}/{}".format(organization.name, redirect_to)
         response = redirect(url.replace("//", "/").rstrip("/"), code=308)
         raise abort(response)
@@ -546,7 +546,7 @@ def load_org(redirect_to: str, allow_anonymous: bool = False):
             redirect_args_filler.pop("user_claim", None)
             redirect_to_url = url_for(redirect_to, **redirect_args_filler)
             o = get_org_from_url(org, redirect_to=redirect_to_url)
-            
+
             if account_id and not is_org_viewable(account_id, o):
                 raise abort(404)
             elif not account_id and not allow_anonymous:
@@ -580,7 +580,7 @@ def get_workspace_from_url(org: Org, workspace: str,
 
     if w.name != workspace:
         # the user likely called with a different case in the url
-        # we prefer to redirect to the correct url for better visibility
+        # we prefer to redirect to the correct url for better visibility
         url = "/{}/{}/{}".format(org.name, w.name, redirect_to)
         raise abort(redirect(url.replace("//", "/")))
 
@@ -606,7 +606,7 @@ def load_org_and_workspace(redirect_to: str, allow_anonymous: bool = False):
             redirect_args_filler.pop("user_claim", None)
             redirect_to_url = url_for(redirect_to, **redirect_args_filler)
             o = get_org_from_url(org, redirect_to=redirect_to_url)
-            
+
             workspace = kwargs.get("workspace")
             if not workspace:
                 return abort(404)
@@ -616,7 +616,7 @@ def load_org_and_workspace(redirect_to: str, allow_anonymous: bool = False):
             redirect_to_url = url_for(redirect_to, **redirect_args_filler)
             w = get_workspace_from_url(
                 org=o, workspace=workspace, redirect_to=redirect_to_url)
-            
+
             if account_id and not is_workspace_viewable(account_id, o, w):
                 raise abort(404)
             elif allow_anonymous and not account_id and \
@@ -678,7 +678,7 @@ def get_caller_org_activities(org: Org, caller: Dict[str, Any]) \
     return result
 
 
-def get_caller_workspace_activities(workspace: Workspace, 
+def get_caller_workspace_activities(workspace: Workspace,
                                     caller: Dict[str, Any]) \
                                     -> List[Dict[str, Any]]:
     org_owner = caller.get("org_owner") if caller else False
@@ -704,7 +704,7 @@ def get_caller_workspace_activities(workspace: Workspace,
             d["org"] = {
                 "name": workspace.org.name
             }
-        
+
             d["workspace"] = {
                 "name": workspace.name
             }
@@ -713,7 +713,7 @@ def get_caller_workspace_activities(workspace: Workspace,
     return result
 
 
-def get_account_activities(account_id: str, 
+def get_account_activities(account_id: str,
                            caller: Dict[str, Any]) -> List[Dict[str, Any]]:
     if not caller:
         visibility = ActivityVisibility.anonymous

@@ -28,8 +28,7 @@ def get_experiment(experiment_id: str) -> Optional[Experiment]:
 
 
 def get_experiment_in_workspace_for_user(user_claim: UserClaim, org: str,
-                                         workspace: str,
-                                         experiment_id: str,
+                                         workspace: str, experiment_id: str,
                                          include_payload: bool = False) \
                                          -> Optional[Experiment]:
     experiment = Exp.query.filter(
@@ -129,9 +128,9 @@ def get_recent_public_experiments_in_org(org_id: str,
 
 def get_recent_executions_in_org(org_id: str, visibility: str = "status") \
                                  -> List[Run]:
-    executions = Execution.query.filter(
-        Execution.org_id==org_id).order_by(
-            Execution.timestamp.desc()).limit(5)
+    executions = Exec.query.filter(
+        Exec.org_id==org_id).order_by(
+            Exec.timestamp.desc()).limit(5)
     runs = []
     for e in executions:
         runs.append(e.to_dict(visibility=visibility))
@@ -141,9 +140,9 @@ def get_recent_executions_in_org(org_id: str, visibility: str = "status") \
 def get_recent_executions_in_workspace(workspace_id: str,
                                        visibility: str = "status") \
                                        -> List[Run]:
-    executions = Execution.query.filter(
-        Execution.workspace_id==workspace_id).order_by(
-            Execution.timestamp.desc()).limit(5)
+    executions = Exec.query.filter(
+        Exec.workspace_id==workspace_id).order_by(
+            Exec.timestamp.desc()).limit(5)
     runs = []
     for e in executions:
         runs.append(e.to_dict(visibility=visibility))

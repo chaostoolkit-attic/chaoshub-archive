@@ -20,8 +20,9 @@ def setup_service(main_app: Flask, cache: Cache):
         url_prefix="/<string:org>/<string:workspace>/experiment")
     main_app.register_blueprint(
         execution_service,
-        url_prefix="/<string:org>/<string:workspace>/experiment/<string:experiment_id>/execution")
+        url_prefix="/<string:org>/<string:workspace>/experiment"
+                   "/<string:experiment_id>/execution")
     main_app.register_blueprint(
         schedule_experiment_service,
-        url_prefix="/<string:org>/<string:workspace>/experiment/<string:experiment_id>/schedule")
-
+        url_prefix="/<string:org>/<string:workspace>/experiment"
+                   "/<string:experiment_id>/schedule")
