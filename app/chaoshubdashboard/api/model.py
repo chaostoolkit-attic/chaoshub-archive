@@ -127,7 +127,7 @@ class APIAccessToken(db.Model):  # type: ignore
     @staticmethod
     def get_active_for_account(account_id: str) -> List['APIAccessToken']:
         non_revoked_tokens = APIAccessToken.query.filter(
-            APIAccessToken.revoked is False,
+            APIAccessToken.revoked==False,
             APIAccessToken.account_id==account_id).all()
 
         return [token for token in non_revoked_tokens if token.is_active()]

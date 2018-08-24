@@ -441,7 +441,7 @@ def is_workspace_owner(account_id: str, o: Org, w: Workspace) -> bool:
         return False
 
     assoc = WorkpacesMembers.query.filter(
-        WorkpacesMembers.is_owner is True,
+        WorkpacesMembers.is_owner==True,
         WorkpacesMembers.account_id==account_id,
         WorkpacesMembers.workspace_id==w.id).first()
 
@@ -486,7 +486,7 @@ def can_org_be_deleted(account_id: str, o: Org) -> bool:
         return False
 
     assoc = OrgsMembers.query.filter(
-        OrgsMembers.is_owner is True,
+        OrgsMembers.is_owner==True,
         OrgsMembers.account_id==account_id,
         OrgsMembers.org_id==o.id).first()
 

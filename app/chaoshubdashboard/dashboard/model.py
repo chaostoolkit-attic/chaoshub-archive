@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 from enum import Enum, IntEnum, auto
 import secrets
 import sys
@@ -277,7 +278,7 @@ class Workspace(db.Model):  # type: ignore
         """
         return WorkpacesMembers.query.filter(
             WorkpacesMembers.workspace_id==self.id,
-            WorkpacesMembers.is_owner is True,
+            WorkpacesMembers.is_owner==True,
             WorkpacesMembers.account_id==account_id).first() is not None
 
     def has_single_owner(self) -> bool:
@@ -286,7 +287,7 @@ class Workspace(db.Model):  # type: ignore
         """
         return WorkpacesMembers.query.filter(
             WorkpacesMembers.workspace_id==self.id,
-            WorkpacesMembers.is_owner is True).count() == 1
+            WorkpacesMembers.is_owner==True).count() == 1
 
     def make_collaborator(self, account_id: Union[str, uuid.UUID]):
         """
@@ -450,7 +451,7 @@ class Org(db.Model):  # type: ignore
         Return `True` when the given account is an owner of the organization
         """
         return OrgsMembers.query.filter(
-            OrgsMembers.org_id==self.id, OrgsMembers.is_owner is True,
+            OrgsMembers.org_id==self.id, OrgsMembers.is_owner==True,
             OrgsMembers.account_id==account_id).first() is not None
 
     def has_single_owner(self) -> bool:
@@ -459,7 +460,7 @@ class Org(db.Model):  # type: ignore
         """
         return OrgsMembers.query.filter(
             OrgsMembers.org_id==self.id,
-            OrgsMembers.is_owner is True).count() == 1
+            OrgsMembers.is_owner==True).count() == 1
 
     def make_member(self, account_id: Union[str, uuid.UUID]):
         """
@@ -532,7 +533,8 @@ class Activity(db.Model):  # type: ignore
     experiment_id = db.Column(UUIDType(binary=False), nullable=True)
     execution_id = db.Column(UUIDType(binary=False), nullable=True)
     timestamp = db.Column(
-        db.DateTime(), server_default=func.current_timestamp())
+        db.BigInteger,
+        default=lambda: int(datetime.utcnow().timestamp() * 1000))
     kind = db.Column(db.String, nullable=True)
     visibility = db.Column(
         db.Enum(ActivityVisibility), nullable=False,
@@ -562,7 +564,7 @@ class Activity(db.Model):  # type: ignore
             "execution_id": execution_id,
             "type": self.kind,
             "visibility": self.visibility.value,
-            "timestamp": self.timestamp.timestamp(),
+            "timestamp": self.timestamp,
             "title": self.title,
             "info": self.info,
             "extra": self.extra
@@ -606,7 +608,8 @@ class Activity(db.Model):  # type: ignore
             visibility=visibility,
             title=activity.get("title"),
             info=activity.get("info"),
-            extra=activity.get("extra")
+            extra=activity.get("extra"),
+            timestamp=activity.get("timestamp")
         )
 
     @staticmethod

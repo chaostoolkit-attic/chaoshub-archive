@@ -1,10 +1,12 @@
 <template>
-  <div class="container">
-    <breadcrumb v-if="experiment" v-bind:experiment="experiment" pagename="Executions" />
+  <div class="container" v-if="experiment">
+    <breadcrumb v-bind:experiment="experiment" pagename="Executions"/>
     <div class="columns">
       <div class="column col-12 col-mx-auto">
-        <div class="panel">
-          <all-runs v-if="executions" v-bind:executions="executions" />
+        <div class="panel my-2" v-for="execution in executions" :key="execution.timestamp">
+          <div class="panel-body">
+            <single-run v-if="execution" v-bind:execution="execution" />
+          </div>
         </div>
       </div>
     </div>
@@ -16,21 +18,18 @@
   import axios from 'axios'
   import swal from 'sweetalert2'
   import Breadcrumb from './Breadcrumb.vue'
-  import AllRuns from './Execution/AllRuns.vue'
-  import NoRuns from './Execution/NoRuns.vue'
-  import MetaInfo from './Experiment/MetaInfo.vue'
+  import SingleRun from './Execution/SingleRun.vue'
 
   export default Vue.extend({
     components: {
       Breadcrumb,
-      MetaInfo,
-      AllRuns
+      SingleRun
     },
     data: function () {
-        return {
-            executions: null,
-            experiment: null
-        }
+      return {
+        experiment: null,
+        executions: null
+      }
     },
     created: function () {
       this.$nextTick(function () {
@@ -45,7 +44,7 @@
         const workspace_name = this.$route.params.workspace
         const experiment_id = this.$route.params.experiment
         return axios.get(
-            '/'+org_name+'/'+workspace_name+'/experiment/'+experiment_id, {
+            '/'+org_name+'/'+workspace_name+'/experiment/'+experiment_id+'/context', {
             headers: {
               'Accept': 'application/json'
             }

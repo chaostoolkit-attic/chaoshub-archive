@@ -1,5 +1,5 @@
 <template>
-  <div class="columns">
+  <div v-if="experiment" class="columns">
     <div class="column col-12 col-mx-auto">
       <div class="columns">
         <div class="column col-9">

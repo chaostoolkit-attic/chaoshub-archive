@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from collections import OrderedDict
-import copy
 import io
 import os.path
 from typing import Any, Dict
@@ -158,7 +157,7 @@ def schedule_execution(user_claim: UserClaim, org: Org, workspace: Workspace,
     context["token"] = token["access_token"]
     context["org"] = org
     context["workspace"] = workspace
-    payload = copy.deepcopy(experiment.payload)
+    payload = json.loads(json.dumps(experiment.payload))
     context["experiment"] = {
         "id": shortuuid.encode(experiment.id),
         "payload": payload

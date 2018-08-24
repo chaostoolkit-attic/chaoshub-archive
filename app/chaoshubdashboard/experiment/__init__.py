@@ -3,7 +3,7 @@ from functools import wraps
 from typing import List, Optional, Tuple, Union
 import uuid
 
-from flask import abort, request, current_app
+from flask import abort, jsonify, request, current_app
 from chaoshubdashboard.model import db
 import shortuuid
 
@@ -17,7 +17,8 @@ __all__ = ["get_last_updated_experiments", "get_recent_experiments_in_org",
            "load_hub_extension", "load_experiment", "load_payload",
            "get_recent_public_experiments_in_workspace", "store_execution",
            "get_recent_executions_in_org", "store_experiment",
-           "get_experiment_in_workspace_for_user", "can_write_to_workspace"]
+           "get_experiment_in_workspace_for_user", "can_write_to_workspace",
+           "load_execution"]
 
 
 def get_experiment(experiment_id: str) -> Optional[Experiment]:
@@ -205,6 +206,32 @@ def load_experiment():
                     raise abort(r)
                 kwargs.pop("experiment_id", None)
                 kwargs["experiment"] = experiment
+            return f(*args, **kwargs)
+        return wrapped
+    return inner
+
+
+def load_execution():
+    """
+    Load the execution from the request
+    """
+    def inner(f):
+        @wraps(f)
+        def wrapped(*args, **kwargs):
+            experiment = kwargs.get("experiment")
+            if not experiment:
+                raise abort(404)
+
+            timestamp = kwargs.get("timestamp")
+            if timestamp is not None:
+                execution = experiment.get_execution(timestamp)
+                if not execution:
+                    m = "Please, provide an execution."
+                    r = jsonify({"message": m})
+                    r.status_code = 400
+                    raise abort(r)
+                kwargs.pop("timestamp", None)
+                kwargs["execution"] = execution
             return f(*args, **kwargs)
         return wrapped
     return inner

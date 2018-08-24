@@ -18,7 +18,7 @@ import yamlloader
 from chaoshubdashboard.model import db
 from chaoshubdashboard.utils import cache, load_user
 
-from .. import load_experiment, load_org_and_workspace
+from .. import load_execution, load_experiment, load_org_and_workspace
 from ..model import Execution, Experiment, Schedule
 from ..scheduler import is_scheduler_registered, schedule, schedulers
 from ..services import AuthService, DashboardService
@@ -29,17 +29,29 @@ __all__ = ["execution_service"]
 execution_service = Blueprint("execution_service", __name__)
 
 
+@execution_service.route('<int:timestamp>', methods=['GET'])
+@load_user(allow_anonymous=True)
+@load_org_and_workspace(permissions=('read',))
+@load_experiment()
+@load_execution()
+def index(user_claim: UserClaim, org: Org, workspace: Workspace,
+          experiment: Experiment, execution: Execution):
+    if request.headers.get('Accept') != 'application/json':
+        return render_template('index.html')
+
+
 @execution_service.route('', methods=['GET'])
 @load_user(allow_anonymous=True)
 @load_org_and_workspace(permissions=('read',))
 @load_experiment()
-def index(user_claim: UserClaim, org: Org, workspace: Workspace,
-          experiment: Experiment):
+def executions(user_claim: UserClaim, org: Org, workspace: Workspace,
+               experiment: Experiment):
     if request.headers.get('Accept') != 'application/json':
         return render_template('index.html')
 
     executions = Execution.query.filter(
-        Execution.experiment_id==experiment.id).all()
+        Execution.experiment_id==experiment.id).order_by(
+            Execution.timestamp.desc()).all()
 
     visibilities = workspace["settings"]["visibility"]["execution"]
     if not user_claim:
@@ -52,3 +64,20 @@ def index(user_claim: UserClaim, org: Org, workspace: Workspace,
         result.append(execution.to_dict(visibility))
 
     return jsonify(result)
+
+
+@execution_service.route('<int:timestamp>/context', methods=['GET'])
+@accept("application/json")
+@load_user(allow_anonymous=True)
+@load_org_and_workspace(permissions=('read',))
+@load_experiment()
+@load_execution()
+def context(user_claim: UserClaim, org: Org, workspace: Workspace,
+          experiment: Experiment, execution: Execution):
+    visibilities = workspace["settings"]["visibility"]["execution"]
+    if not user_claim:
+        visibility = visibilities["anonymous"]
+    else:
+        visibility = visibilities["members"]
+
+    return jsonify(execution.to_dict(visibility))

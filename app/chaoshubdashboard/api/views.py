@@ -101,14 +101,15 @@ def upload_run(org: Org, workspace: Workspace, experiment: Experiment,
         "org_id": org["id"],
         "workspace_id": workspace["id"],
         "experiment_id": experiment["id"],
-        "visibility": "collaborator"
+        "visibility": "collaborator",
+        "timestamp": execution["timestamp"]
     })
 
     response = jsonify({"id": x_id})
     response.status_code = 201
     response.headers["Location"] = url_for(
-        "workspace_experiment_service.run_index", org=org["name"],
+        "execution_service.index", org=org["name"],
         workspace=workspace["name"],
         experiment_id=experiment["id"],
-        run_id=execution["index"])
+        timestamp=execution["timestamp"])
     return response

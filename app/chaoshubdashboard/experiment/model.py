@@ -110,6 +110,11 @@ class Experiment(db.Model):  # type: ignore
 
         return Experiment.query.filter(Experiment.id==exp_id).first()
 
+    def get_execution(self, timestamp: int) -> Optional['Execution']:
+        return Execution.query.filter(
+            Execution.experiment_id==self.id,
+            Execution.timestamp==timestamp).first()
+
 
 class Init(db.Model):  # type: ignore
     __bind_key__ = 'experiment_service'
@@ -132,10 +137,10 @@ class Execution(db.Model):  # type: ignore
 
     id = db.Column(
         UUIDType(binary=False), primary_key=True, default=uuid.uuid4)
-    index = db.Column(db.Integer, default=0)
     account_id = db.Column(UUIDType(binary=False), nullable=False, index=True)
     timestamp = db.Column(
-        db.Float, default=lambda: datetime.utcnow().timestamp())
+        db.BigInteger,
+        default=lambda: int(datetime.utcnow().timestamp() * 1000))
     org_id = db.Column(UUIDType(binary=False), nullable=False, index=True)
     workspace_id = db.Column(
         UUIDType(binary=False), nullable=False, index=True)
@@ -151,8 +156,7 @@ class Execution(db.Model):  # type: ignore
             "timestamp": self.timestamp,
             "org": shortuuid.encode(self.org_id),
             "workspace": shortuuid.encode(self.workspace_id),
-            "experiment": shortuuid.encode(self.experiment_id),
-            "index": self.index
+            "experiment": shortuuid.encode(self.experiment_id)
         }
 
         if visibility == "full":

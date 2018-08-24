@@ -2,165 +2,187 @@
   <div class="columns">
     <div class="column col-12">
       <div class="divider" data-content="Details" />
-      <div class="container">
-        <div class="columns">
-          <div class="column col-3">
-            <strong>Status</strong>
-          </div>
-          <div class="column col-9">
-              <span class="text-danger">Failed</span>
-           </div>
-          <div class="column col-3">
-            <strong>Start Time</strong>
-          </div>
-          <div class="column col-9">2018-07-22T13:39:49.012259</div>
-          <div class="column col-3">
-            <strong>Completion Time</strong>
-          </div>
-          <div class="column col-9">2018-07-22T13:42:49.012259</div>
-          <div class="column col-3">
-            <strong>Run on Node</strong>
-          </div>
-          <div class="column col-9">sylvain-laptop</div>
-          <div class="column col-3">
-            <strong>Platform</strong>
-          </div>
-          <div class="column col-9">Linux-4.15.0-20-generic-x86_64-with-Ubuntu-18.04-bionic</div>
+      <div class="columns">
+        <div class="column col-3">
+          <strong>Status</strong>
         </div>
+        <div class="column col-9">
+          <span class="text-danger">{{execution.result.status}}</span>
+        </div>
+        <div class="column col-3">
+          <strong>Start Time</strong>
+        </div>
+        <div class="column col-9">{{execution.result.start}}</div>
+        <div class="column col-3">
+          <strong>Completion Time</strong>
+        </div>
+        <div class="column col-9">{{execution.result.end}}</div>
+        <div class="column col-3">
+          <strong>Run on Node</strong>
+        </div>
+        <div class="column col-9">{{execution.result.node}}</div>
+        <div class="column col-3">
+          <strong>Platform</strong>
+        </div>
+        <div class="column col-9">{{execution.result.platform}}</div>
       </div>
     </div>
     <div class="column col-12">
-      <div class="py-2" />
-      <div class="divider" data-content="Configuration" />
-      <div class="container">
-        <div class="columns">
-          <div class="column col-3">
-            <strong>gce_cluster_name</strong>
-          </div>
-          <div class="column col-9">demos-cluster</div>
-          <div class="column col-3">
-            <strong>gce_project_id</strong>
-          </div>
-          <div class="column col-9">chaosiqdemos</div>
-          <div class="column col-3">
-            <strong>gce_region</strong>
-          </div>
-          <div class="column col-9">us-west1</div>
-          <div class="column col-3">
-            <strong>gce_zone</strong>
-          </div>
-          <div class="column col-9">us-west1-a</div>
-          <div class="column col-3">
-            <strong>prometheus_base_url</strong>
-          </div>
-          <div class="column col-9">http://demo.foo.bar</div>
-        </div>
-      </div>
-    </div>
-    <div class="column col-12">
-      <div class="py-2" />
-      <div class="divider" data-content="Secrets" />
-      <div class="container">
-        <div class="columns">
-          <div class="column col-3">
-            <strong>gce</strong>
-          </div>
-          <div class="column col-3">service_account_file</div>
-          <div class="column col-6">~/my-gce-sa-credentials.json</div>
-          <div class="column col-3">
-            <strong>global</strong>
-          </div>
-          <div class="column col-3">auth</div>
-          <div class="column col-7">Basic amFuZTpkZW1v</div>
-        </div>
-      </div>
-    </div>
-    <div class="column col-12">
-      <div class="py-2" />
-      <div class="divider" data-content="Steady State Before System Perturbation" />
-      <div class="container">
-        <div class="columns">
-          <div class="column col-12">
-            <div class="accordion">
-              <input id="accordion-1" type="checkbox" name="accordion-checkbox" hidden>
-              <div class="toast">
-                <label class="accordion-header c-hand" for="accordion-1">
-                  <i class="icon icon-caret float-right" /> function-must-exist
-                </label>
-              </div>
-              <div class="accordion-body">
-                <div class="columns">
-                  <div class="column col-12">
-                    <div class="columns">
-                      <div class="column col-1">
-                        <strong>Type</strong>
-                      </div>
-                      <div class="column col-11">HTTP</div>
-                      <div class="column col-1">
-                        <strong>URL</strong>
-                      </div>
-                      <div class="column col-11">
-                        <div class="text-ellipsis">http://demo.foo.bar/system/function/astre</div>
-                      </div>
-                      <div class="column col-12">
-                        <strong>Headers</strong>
-                      </div>
-                      <div class="column col-12">
-                        <div class="columns">
-                          <div class="column col-2">Authorization: </div>
-                          <div class="column col-10">
-                            <code>${auth}</code>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="column col-12">
-                        <br>
-                      </div>
-                      <div class="column col-1">
-                        <strong>Secrets</strong>
-                      </div>
-                      <div class="column col-11">
-                        <span class="label">global</span>
-                        <span class="label">faas</span>
-                      </div>
-                      <div class="column col-1">
-                        <strong>Timeouts</strong>
-                      </div>
-                      <div class="column col-11">Connection: 3s - Receive: 3s</div>
-                      <div class="column col-1">
-                        <strong>Tolerance</strong>
-                      </div>
-                      <div class="column col-11">200</div>
-                    </div>
+      <div class="columns">
+        <div class="column col-6">
+          <div class="py-2" />
+          <div class="divider" data-content="Steady State Before System Perturbation" />
+          <div class="columns">
+            <div class="column col-12" v-if="execution.result.steady_states.before">
+              <div class="accordion">
+                <template v-for="before in execution.result.steady_states.before.probes">
+                  <input :key="before.activity.name+'-before'" :id="before.activity.name+'-before'" type="checkbox" name="accordion-checkbox"
+                    hidden>
+                  <div :key="before.activity.name+'-before'" v-bind:class="{ toast: true, 'toast-success': before.tolerance_met, 'toast-error': !before.tolerance_met }">
+                    <label class="accordion-header c-hand" :for="before.activity.name+'-before'">
+                      <i class="icon icon-caret float-right" /> {{before.activity.name}}
+                    </label>
                   </div>
-                  <div class="column col-12">
+                  <div :key="before.activity.name+'-before'" class="accordion-body">
                     <div class="columns">
-                      <div class="column col-12">
+                      <div class="column col-4">
+                        <strong>Run to Completion</strong>
+                      </div>
+                      <div class="column col-8">
+                        <span class="text-danger">{{before.status}}</span>
+                      </div>
+                      <div class="column col-4">
+                        <strong>Start Time</strong>
+                      </div>
+                      <div class="column col-8">{{before.start}}</div>
+                      <div class="column col-4">
+                        <strong>Completion Time</strong>
+                      </div>
+                      <div class="column col-8">{{before.end}}</div>
+                      <div class="column col-4">
+                        <strong>Tolerance Checked</strong>
+                      </div>
+                      <div class="column col-8">
+                        <span class="text-danger">{{before.tolerance_met}}</span>
+                      </div>
+                      <div class="column col-4">
                         <strong>Output</strong>
                       </div>
-                      <div class="column col-12">
-                        <pre v-highlightjs>
-                                  <code class="JSON"/>
-                                </pre>
+                      <div class="column col-8">
+                        <small>
+                          <samp>{{before.output}}</samp>
+                        </small>
                       </div>
                     </div>
+                  </div>
+                </template>
+              </div>
+            </div>
+            <div v-else class="column col-12">
+              Steady state before the method was not executed.
+            </div>
+          </div>
+        </div>
+        <div class="column col-6">
+          <div class="py-2" />
+          <div class="divider" data-content="Steady State After System Perturbation" />
+          <div class="columns">
+            <div class="column col-12" v-if="execution.result.steady_states.after">
+              <div class="accordion">
+                <template v-for="after in execution.result.steady_states.after.probes">
+                  <input :key="after.activity.name+'-after'" :id="after.activity.name+'-after'" type="checkbox" name="accordion-checkbox" hidden>
+                  <div :key="after.activity.name+'-after'" v-bind:class="{ toast: true, 'toast-success': after.tolerance_met, 'toast-error': !after.tolerance_met }">
+                    <label class="accordion-header c-hand" :for="after.activity.name+'-after'">
+                      <i class="icon icon-caret float-right" /> {{after.activity.name}}
+                    </label>
+                  </div>
+                  <div :key="after.activity.name+'-after'" class="accordion-body">
+                    <div class="columns">
+                      <div class="column col-4">
+                        <strong>Run to Completion</strong>
+                      </div>
+                      <div class="column col-8">
+                        <span class="text-danger">{{after.status}}</span>
+                      </div>
+                      <div class="column col-4">
+                        <strong>Start Time</strong>
+                      </div>
+                      <div class="column col-8">{{after.start}}</div>
+                      <div class="column col-4">
+                        <strong>Completion Time</strong>
+                      </div>
+                      <div class="column col-8">{{after.end}}</div>
+                      <div class="column col-4">
+                        <strong>Tolerance Checked</strong>
+                      </div>
+                      <div class="column col-8">
+                        <span class="text-danger">{{after.tolerance_met}}</span>
+                      </div>
+                      <div class="column col-3">
+                        <strong>Output</strong>
+                      </div>
+                      <div class="column col-9">
+                        <small>
+                          <samp>{{after.output}}</samp>
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </div>
+            <div v-else class="column col-12">
+              Steady state after the method was not executed.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column col-12">
+      <div class="py-2" />
+      <div class="divider" data-content="Method" />
+      <div class="columns">
+        <div class="column col-12" v-if="execution.result.run.length>0">
+          <div class="accordion">
+            <template v-for="method in execution.result.run">
+              <input :key="method.activity.name+'-method'" :id="method.activity.name+'-method'" type="checkbox" name="accordion-checkbox"
+                hidden>
+              <div :key="method.activity.name+'-method'" class="toast">
+                <label class="accordion-header c-hand" :for="method.activity.name+'-method'">
+                  <i class="icon icon-caret float-right" /> {{method.activity.name}}
+                </label>
+              </div>
+              <div :key="method.activity.name+'-method'" class="accordion-body">
+                <div class="columns">
+                  <div class="column col-4">
+                    <strong>Run to Completion</strong>
+                  </div>
+                  <div class="column col-8">
+                    <span class="text-danger">{{method.status}}</span>
+                  </div>
+                  <div class="column col-4">
+                    <strong>Start Time</strong>
+                  </div>
+                  <div class="column col-8">{{method.start}}</div>
+                  <div class="column col-4">
+                    <strong>Completion Time</strong>
+                  </div>
+                  <div class="column col-8">{{method.end}}</div>
+                  <div class="column col-4">
+                    <strong>Output</strong>
+                  </div>
+                  <div class="column col-8">
+                    <small>
+                      <samp>{{method.output}}</samp>
+                    </small>
                   </div>
                 </div>
               </div>
-            </div>
+            </template>
           </div>
-          <div class="column col-12">
-            <div class="accordion">
-              <input id="accordion-2" type="checkbox" name="accordion-checkbox" hidden>
-              <div class="toast">
-                <label class="accordion-header c-hand" for="accordion-2">
-                  <i class="icon icon-caret float-right" /> function-must-respond
-                </label>
-              </div>
-              <div class="accordion-body">
-              </div>
-            </div>
-          </div>
+        </div>
+        <div v-else class="column col-12">
+            Method was not executed.
         </div>
       </div>
     </div>
@@ -174,7 +196,11 @@
   Vue.use(VueHighlightJS)
 
   export default Vue.extend({
-
+    props: {
+      execution: {
+          type: Object
+      }
+    }
   })
 
 </script>

@@ -73,7 +73,7 @@ export default Vue.extend({
       if (!activity.timestamp) {
         return '-'
       }
-      return moment(activity.timestamp, 'X').calendar()
+      return moment(activity.timestamp).calendar()
     },
     activityUrl: function (activity: any): string {
       const org_name = activity.org.name
@@ -84,7 +84,7 @@ export default Vue.extend({
         url = url + '/' + workspace_name + '/experiment/'
 
         if (activity.type === 'execution') {
-            url += activity.experiment_id + '/execution/' + activity.id
+            url += activity.experiment_id + '/execution/' + activity.timestamp
         } else {
             url += activity.experiment_id
         }

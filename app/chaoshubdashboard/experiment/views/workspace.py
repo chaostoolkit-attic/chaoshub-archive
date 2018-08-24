@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from collections import OrderedDict
+import copy
 import io
 import os.path
 from typing import Any, Dict
 import uuid
 
+from chaoslib.extension import merge_extension
 from flask import abort, Blueprint, current_app, redirect, render_template, \
     jsonify, request, send_file, session, url_for, Response
 from flask_accept import accept, accept_fallback
@@ -34,15 +36,6 @@ def index(user_claim: UserClaim, experiment_id: str, org: str, workspace: str):
 
 
 @workspace_experiment_service.route(
-    '<string:experiment_id>/run/<string:run_id>', methods=['GET'])
-@accept_fallback
-@load_user(allow_anonymous=True)
-def run_index(user_claim: UserClaim, experiment_id: str, org: str,
-              workspace: str, run_id: str):
-    return render_template('index.html')
-
-
-@workspace_experiment_service.route(
     '<string:experiment_id>/schedule', methods=['GET'])
 @load_user(allow_anonymous=False)
 def schedule(user_claim: UserClaim, experiment_id: str, org: str,
@@ -55,13 +48,15 @@ def schedule(user_claim: UserClaim, experiment_id: str, org: str,
 @load_user(allow_anonymous=True)
 def raw(user_claim: UserClaim, experiment_id: str, org: str, workspace: str):
     experiment = load_experiment(user_claim, experiment_id, org, workspace)
-
+    url = url_for(
+        "workspace_experiment_service.index", org=org, workspace=workspace,
+        experiment_id=experiment_id, _external=True)
     mimetypes = request.headers.get("Accept")
     if "application/json" in mimetypes:
-        payload = prepare_raw(experiment, fmt="json")
+        payload = prepare_raw(experiment, url=url, fmt="json")
         content_type = "application/json"
     elif "application/x-yaml" in mimetypes:
-        payload = prepare_raw(experiment, fmt="yaml")
+        payload = prepare_raw(experiment, url=url, fmt="yaml")
         content_type = "application/x-yaml"
     else:
         return abort(406)
@@ -201,15 +196,26 @@ def load_experiment(user_claim: UserClaim, experiment_id: str, org: str,
     return experiment
 
 
-def prepare_raw(experiment: Experiment, fmt: str = 'json') -> str:
+def prepare_raw(experiment: Experiment, url: str, fmt: str = 'json') -> str:
+    exp = json.loads(json.dumps(experiment.payload))
+
+    # set the experiment id in the payload so that we know where to attach
+    # executions
+    exp_id = shortuuid.encode(experiment.id)
+    merge_extension(exp, {
+        "name": "chaoshub",
+        "self": url,
+        "experiment": exp_id
+    })
+
     if fmt == 'json':
-        payload = json.dumps(experiment.payload, indent=2)
+        payload = json.dumps(exp, indent=2)
     elif fmt == 'yaml':
         # pyaml cannot directly dump the weakref to the sql json payload,
         # we also load using dict insertion ordering to preserve the natural
         # ordering of elements in the experiment
         payload = json.loads(
-            json.dumps(experiment.payload, indent=None),
+            json.dumps(exp, indent=None),
             object_pairs_hook=OrderedDict)
         payload = yaml.dump(
             payload, indent=2, explicit_start=True, default_flow_style=False,
@@ -225,7 +231,10 @@ def download(user_claim: UserClaim, experiment_id: str, org: str,
              filename: str = 'experiment.json',
              mimetype: str = 'application/json'):
     experiment = load_experiment(user_claim, experiment_id, org, workspace)
-    payload = prepare_raw(experiment, fmt=fmt)
+    url = url_for(
+        "workspace_experiment_service.index",org=org, workspace=workspace,
+        experiment_id=experiment_id, _external=True)
+    payload = prepare_raw(experiment, url=url, fmt=fmt)
 
     data = io.BytesIO(payload.encode('utf-8'))
     data.seek(0)

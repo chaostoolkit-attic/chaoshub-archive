@@ -264,7 +264,7 @@ def get_active_access_tokens(user_claim: UserClaim) -> List[Dict[str, Any]]:
     account_id = user_claim["id"]
     tokens = AccessToken.query.filter(
         AccessToken.account_id==account_id,
-        AccessToken.revoked is False).all()
+        AccessToken.revoked==False).all()
     return [token.to_dict() for token in tokens]
 
 
