@@ -17,6 +17,8 @@ Chaos Engineering and Resiliency efforts.
 [agpl]: https://www.gnu.org/licenses/agpl-3.0.en.html
 [chaostoolkit]: https://chaostoolkit.org/
 
+[![Requirements Status](https://requires.io/github/chaostoolkit/chaoshub/requirements.svg?branch=master)](https://requires.io/github/chaostoolkit/chaoshub/requirements/?branch=master)
+
 ## Get Started
 
 The Chaos Hub is a simple web application which can run locally, follow the next
