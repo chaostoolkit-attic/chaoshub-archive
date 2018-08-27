@@ -14,14 +14,12 @@ from .types import Experiment, Extension, UserClaim, Workspace
 __all__ = ["load_context"]
 
 
-def load_context(permissions: Tuple[str, ...] = ('read',)):
+def load_context(permissions: Tuple[str, ...] = ('view',)):
     """
     Load org, workspace and experiment from the payload and extension context
 
     This should be called after load_payload() and load_hub_extension()
     """
-    expected_permissions = set(permissions)
-
     def inner(f):
         @wraps(f)
         def wrapped(*args, **kwargs):
@@ -46,7 +44,8 @@ def load_context(permissions: Tuple[str, ...] = ('read',)):
                 raise abort(404)
 
             acls = workspace["context"]["acls"]
-            if set(acls).issubset(expected_permissions):
+            expected_permissions = set(permissions)
+            if not set(acls).issuperset(expected_permissions):
                 raise abort(404)
 
             kwargs["org"] = workspace["org"]

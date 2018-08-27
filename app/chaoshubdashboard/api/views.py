@@ -42,7 +42,7 @@ token_authenticated.connect(user_authenticated_on_api, require_oauth)
 @require_oauth()
 @load_payload()
 @load_hub_extension(required=False)
-@load_context(permissions=('read', 'write'))
+@load_context(permissions=('view', 'write'))
 @load_experiment(required=False)
 def upload_experiment(org: Org, workspace: Workspace, payload: Dict[str, Any],
                       experiment: Experiment = None,
@@ -84,7 +84,7 @@ def upload_experiment(org: Org, workspace: Workspace, payload: Dict[str, Any],
 @require_oauth()
 @load_payload()
 @load_hub_extension(required=False)
-@load_context(permissions=('read', 'write'))
+@load_context(permissions=('view', 'write'))
 @load_experiment()
 def upload_run(org: Org, workspace: Workspace, experiment: Experiment,
                payload: Dict[str, Any], extension: Extension = None):

@@ -416,21 +416,11 @@ def is_workspace_writable(account_id: str, o: Org, w: Workspace) -> bool:
     if not w:
         return False
 
-    assoc = WorkpacesMembers.query.filter(
-        WorkpacesMembers.account_id==account_id,
-        WorkpacesMembers.workspace_id==w.id).first()
+    if w.is_collaborator(account_id) or w.is_owner(account_id) or \
+        o.is_member(account_id) or o.is_owner(account_id):
+        return True
 
-    if not (assoc and assoc.is_owner):
-        return False
-
-    assoc = OrgsMembers.query.filter(
-        OrgsMembers.account_id==account_id,
-        OrgsMembers.org_id==o.id).first()
-
-    if not (assoc and assoc.is_owner):
-        return False
-
-    return True
+    return False
 
 
 def is_workspace_owner(account_id: str, o: Org, w: Workspace) -> bool:

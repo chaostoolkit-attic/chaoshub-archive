@@ -2,7 +2,13 @@
 
 ## [Unreleased][]
 
-[Unreleased]: https://github.com/chaostoolkit/chaoshub/compare/0.1.2...HEAD
+[Unreleased]: https://github.com/chaostoolkit/chaoshub/compare/0.1.3...HEAD
+
+### Changed
+
+-   Cannot upload experiments to another account [#11][11]
+
+[11]: https://github.com/chaostoolkit/chaoshub/issues/11
 
 
 ## [0.1.2][] - 2018-08-24
