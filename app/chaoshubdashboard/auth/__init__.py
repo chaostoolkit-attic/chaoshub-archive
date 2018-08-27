@@ -169,8 +169,6 @@ def register_local_account(username: str, password: str) -> Optional[Account]:
     local = LocalAccount(username=lower_username, password=password)
     db.session.add(local)
 
-    print(local.password.hash)
-
     account = Account(
         local=local,
         client=client,
@@ -179,8 +177,6 @@ def register_local_account(username: str, password: str) -> Optional[Account]:
     db.session.add(account)
 
     db.session.commit()
-
-    print(local.password.hash)
 
     user_claim = account.to_dict()
 
@@ -194,12 +190,9 @@ def register_local_account(username: str, password: str) -> Optional[Account]:
 
 
 def log_user_in(username: str, password: str) -> Optional[Account]:
-    print(username)
-    print(password)
     local = LocalAccount.query.filter(
         LocalAccount.username==username.lower()).first()
 
-    print(local)
     if not local or local.password != password:
         return None
     return Account.query.filter(Account.id==local.account_id).first()
