@@ -1,6 +1,7 @@
 # Home of the Chaos Hub Open-Source Project
 
 ![Chaos Hub][logo]
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fchaostoolkit%2Fchaoshub.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fchaostoolkit%2Fchaoshub?ref=badge_shield)
 
 [logo]: https://github.com/chaostoolkit/chaoshub/raw/master/assets/chaoshub.png "Chaos Hub"
 
@@ -58,3 +59,6 @@ contribute to it.
 
 [contribute]: https://github.com/chaostoolkit/chaoshub/blob/master/docs/contribute.md
 [license]: https://github.com/chaostoolkit/chaoshub/blob/master/docs/licensing.md
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fchaostoolkit%2Fchaoshub.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fchaostoolkit%2Fchaoshub?ref=badge_large)
